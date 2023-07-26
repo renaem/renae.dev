@@ -1,7 +1,11 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import anime from 'animejs/lib/anime.es.js';
+
 
 @Component({
   selector: 'app-root',
@@ -10,22 +14,39 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 })
 
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('canvas')
-  private canvasRef: ElementRef;
-
-  //* sphere Properties
-
-  @Input() public rotationSpeedX: number = 0.05;
-  @Input() public rotationSpeedY: number = 0.01;
-  @Input() public size: number = 200;
+  @ViewChild('canvas') private canvasRef: ElementRef;
+  @ViewChild('cursor') private customCursor: ElementRef;
+  @ViewChild('cursorCircle') private customCursorCircle: ElementRef;
 
   //* Stage Properties
-  @Input() public fieldOfView: number = 4;
-  @Input('nearClipping') public nearClippingPlane: number = 1;
+  @Input() public fieldOfView: number = 3;
+  @Input('nearClipping') public nearClippingPlane: number = 0.1;
   @Input('farClipping') public farClippingPlane: number = 2000;
 
-  //? Helper Properties (Private Properties);
+  mouseCoords = { 
+    x: 0, 
+    y: 0 
+  };
 
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    this.mouseCoords = this.getMousePos(event);
+    this.setCursorPosition(event);
+  }
+
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(event: MouseEvent) {
+    this.scaleCursor(event, 0.25);
+    this.customCursorCircle.nativeElement.classList.add('animate');
+  }
+
+  @HostListener('mouseup', ['$event'])
+  onMouseUp(event: MouseEvent) {
+    this.scaleCursor(event, 1);
+    this.customCursorCircle.nativeElement.classList.remove('animate');
+  }
+
+  //? Helper Properties (Private Properties);
   private camera!: THREE.PerspectiveCamera;
 
   private get canvas(): HTMLCanvasElement {
@@ -33,39 +54,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private gltfLoader = new GLTFLoader();
-
-  private geometry = new THREE.SphereGeometry(0.25, 16, 16);
-  private material = new THREE.MeshStandardMaterial(0xFFFFFF);
-  private sphere: THREE.Mesh = new THREE.Mesh(this.geometry, this.material);
+  private dracoLoader = new DRACOLoader();
 
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
+  private islandObj;
 
   private controls: OrbitControls;
-
-  private tubular: THREE.Group = new THREE.Group();
-
-  private assembleSpheres() {
-    const protoSphere = new THREE.Mesh(this.geometry, this.material);
-    protoSphere.castShadow = true;
-    protoSphere.receiveShadow = true;
-
-    // create clones of the protoSphere
-    // and add each to the group
-    for (let i = 0; i < 10; i += 0.05) {
-      const sphere = protoSphere.clone();
-
-      // position the spheres on around a circle
-      sphere.position.x = Math.cos(3 * Math.PI * i);
-      sphere.position.y = i;
-      sphere.position.z = Math.sin(3 * Math.PI * i);
-      // sphere.scale.multiplyScalar(0.5);
-
-      this.tubular.add(sphere);
-    }
-
-    this.scene.add(this.tubular);
-  }
 
   /**
    * Create the scene
@@ -76,76 +71,76 @@ export class AppComponent implements OnInit, AfterViewInit {
   private createScene() {
     //* Scene
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xFFFFFF)
 
-    this.assembleSpheres();
+    // Env
+    const hdrUrl = 'assets/images/gradient.hdr'
+    new RGBELoader().load(hdrUrl, texture => {
+      const gen = new THREE.PMREMGenerator(this.renderer)
+      const envMap = gen.fromEquirectangular(texture).texture
+      this.scene.environment = envMap;
+      
+      texture.dispose()
+      gen.dispose()
+    })
 
-    // this.gltfLoader.load('/assets/hamburger.glb', (gltf) => {
-    //   this.scene.add(gltf.scene)
-    //   const light = new THREE.AmbientLight( 0x404040, 4 ); // soft white light
-    //   this.scene.add( light );
-    // });
+    this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    this.dracoLoader.preload();
+    this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
-    //Create a PointLight and turn on shadows for the light
-    const pointLight: THREE.PointLight = new THREE.PointLight( 0x34A4E8, 1, 100 );
-    pointLight.position.set( 0, 25, 0 );
-    pointLight.castShadow = true; // default false
+    this.gltfLoader.load('/assets/renae_island/renae_island_baking.gltf', (gltf) => {
+      gltf.scene.traverse( function( node ) {
+        if (node.isGroup) {
+          node.children.forEach(child => {
+            if (child.isMesh || child.isObject3D) {
+              child.castShadow = true;
+            }
+          })
+        } else if(node.isMesh || node.isObject3D) {
+          if(node.name === 'Floor') {
+            node.receiveShadow = true;
+          } else {
+            node.castShadow = true;
+          }
+        }
+      } );
 
-    const pointLight2: THREE.PointLight = new THREE.PointLight( 0xF857A6, 2.5, 100 );
-    pointLight2.position.set( 25, 0, 0 );
-    pointLight2.castShadow = true; // default false
+      gltf.scene.position.x = gltf.scene.position.x + 1.55;
+      gltf.scene.position.z = gltf.scene.position.z + 1.55;
 
-    const pointLight3: THREE.PointLight = new THREE.PointLight( 0x10BF70, 2.5, 100 );
-    pointLight3.position.set( -25, 0, 30 );
-    pointLight3.castShadow = true; // default false
+      this.islandObj = gltf.scene;
 
-    const pointLight4: THREE.PointLight = new THREE.PointLight( 0xFF6900, 2.5, 100 );
-    pointLight4.position.set( 0, 0, 0 );
-    pointLight4.castShadow = true; // default false
+      this.scene.add(this.islandObj);
+    });
+
+    //Create a DirectionalLight and turn on shadows for the light
+    const directionLight: THREE.DirectionalLight = new THREE.DirectionalLight( 0xFFFFFF, 3);
+    directionLight.position.set( -2, 10, -2 );
+    directionLight.castShadow = true; // default false 
 
     //Set up shadow properties for the light
-    pointLight.shadow.mapSize.width = 512; // default
-    pointLight.shadow.mapSize.height = 512; // default
-    pointLight.shadow.camera.near = 0.5; // default
-    pointLight.shadow.camera.far = 500; // default
-    // pointLight.shadowMapVisible = true;
+    directionLight.shadow.mapSize.width = 512; // default
+    directionLight.shadow.mapSize.height = 512; // default
+    directionLight.shadow.camera.near = 0.5; // default
+    directionLight.shadow.camera.far = 1000;
+    directionLight.shadow.bias = -0.0001;
 
-    this.scene.add( pointLight );
-    this.scene.add( pointLight2 );
-    this.scene.add(pointLight3);
-    this.scene.add(pointLight4);
-
-    const pointLightHelper = new THREE.PointLightHelper( pointLight3, 1 );
-    this.scene.add( pointLightHelper );  
-
-    // const ambientLight = new THREE.AmbientLight( 0xFFFFFF, 0.1 ); // soft white light
-    // this.scene.add( ambientLight );
+    this.scene.add( directionLight );
 
     //*Camera
     let aspectRatio = this.getAspectRatio();
-    this.camera = new THREE.PerspectiveCamera(
-      this.fieldOfView,
-      aspectRatio,
+    this.camera = new THREE.OrthographicCamera(
+      - this.fieldOfView * aspectRatio,
+      this.fieldOfView * aspectRatio,
+      this.fieldOfView, - this.fieldOfView,
       this.nearClippingPlane,
       this.farClippingPlane
     )
-    this.camera.position.z = 0;
-    this.camera.position.y = 30;
-    this.camera.position.x = 0;
 
-    var point = new THREE.Vector3( 0, 10, 0 );
-
-    this.camera.lookAt( point );
-
-    //this.camera.lookAt(new THREE.Vector3(0, 10, 0));
+    this.camera.position.set(5, 8, -5);
   }
 
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
-  }
-
-  private animateTube() {
-    this.tubular.rotation.y += 0.005;
   }
 
   /**
@@ -157,17 +152,32 @@ export class AppComponent implements OnInit, AfterViewInit {
   private startRenderingLoop() {
     //* Renderer
     // Use canvas element in template
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, shadowMap: {enabled: true, type: THREE.PCFSoftShadowMap} });
+    this.renderer = new THREE.WebGLRenderer({ 
+      canvas: this.canvas,
+      antialias: true,
+      alpha: true
+    });
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.physicallyCorrectLights = true;
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.renderer.setPixelRatio(devicePixelRatio);
+    //this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-    // this.controls = new OrbitControls( this.camera, this.renderer.domElement );
+    this.controls = new OrbitControls( this.camera, this.renderer.domElement );
+    this.controls.enableZoom = false;
+    this.controls.enablePan = false;
+    this.controls.enableRotate = false;
 
     let component: AppComponent = this;
     (function render() {
       requestAnimationFrame(render);
-      component.animateTube();
+      if(!component.scene.children[1]) {
+        return;
+      }
+      component.scene.children[1].rotation.y = THREE.MathUtils.lerp(component.scene.children[1]?.rotation.y, (component.mouseCoords.x * Math.PI) / 10000 - 0.5, 0.05)
       component.renderer.render(component.scene, component.camera);
-      // this.controls.update();
+      component.controls.update();
     }());
   }
 
@@ -181,4 +191,31 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.createScene();
     this.startRenderingLoop();
   }
+
+  private getMousePos(event: MouseEvent) {
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  private setCursorPosition(event: MouseEvent) {
+    let xPosition = event.clientX - this.customCursor.nativeElement.clientWidth / 2 + "px";
+    let yPosition = event.clientY - this.customCursor.nativeElement.clientHeight / 2 + "px";
+    this.customCursor.nativeElement.style.transform =
+      "translate(" + xPosition + "," + yPosition + ") scale(1)";
+    return {
+      x: xPosition,
+      y: yPosition
+    };
+  }
+
+  private scaleCursor(e, scale) {
+    this.setCursorPosition(e);
+    this.customCursor.nativeElement.style.transform =
+      "translate(" +
+      this.setCursorPosition(e).x +
+      "," +
+      this.setCursorPosition(e).y +
+      ") scale(" +
+      scale +
+      ")";
+  };
 }

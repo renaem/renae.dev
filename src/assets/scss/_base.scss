@@ -1,4 +1,83 @@
+@font-face {
+    font-family: 'Goudy';
+    src: url('/assets/GoudyBookletter1911-Regular.ttf');
+}
+
 body {
     margin: 0;
     padding: 0;
+    background-image: url('/assets/images/gradient-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 200px;
+    height: auto;
+    font-size: 32px;
+    margin: 0;
+    font-family: 'Goudy';
+    background: -webkit-linear-gradient(right bottom, #F857A6, #7F47DD, #34A4E8 );
+    //background: -webkit-linear-gradient(right bottom, #10BF70, #34A4E8, #7F47DD );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav {
+    position: absolute;
+    z-index: 50;
+    top: 20px;
+    right: 20px;
+}
+
+.headline {
+    position: absolute;
+    right: 125px;
+    font-size: 38px;
+    line-height: 44px;
+    max-width: 500px;
+    top: 340px;
+    text-align: right;
+    font-family: 'Goudy';
+    background: -webkit-linear-gradient(right bottom, #F857A6, #FF6900 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.white-divider {
+    font-family: 'Goudy';
+    padding: 20px 40px;
+    position: relative;
+    background: white;
+    height: 500px;
+    width: 100%;
+    z-index: 20;
+    margin-top: -100px;
+    box-shadow: 0px -4.664663791656494px 3.623039960861206px 0px rgba(40, 4, 92, 0.02),
+        0px -12.897198677062988px 10.017241477966309px 0px rgba(40, 4, 92, 0.04),
+        0px -31.051485061645508px 24.117658615112305px 0px rgba(40, 4, 92, 0.05),
+        0px -103px 80px 0px rgba(40, 4, 92, 0.07);
+}
+
+#cursor {
+    position: fixed;
+    pointer-events: none;
+    transform: none;
+    transform-origin: center center;
+    transition: all 300ms ease-out;
+    padding: 2px;
+    z-index: 10;
+    mix-blend-mode: plus-lighter;
+}
+.cursor-circle {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 5s ease-out;
+}
+.cursor-circle.animate {
+    stroke-dashoffset: 0;
+    /* stroke: white; */
 }

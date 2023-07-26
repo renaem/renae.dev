@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~11.2.6",
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
+    "animejs": "^3.2.1",
     "cannon": "^0.6.2",
     "rxjs": "~6.6.0",
     "three": "^0.148.0",
