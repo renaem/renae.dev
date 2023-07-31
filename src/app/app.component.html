@@ -1,6 +1,6 @@
-<svg id="cursor" #cursor width="200" height="200">
+<!-- <svg id="cursor" #cursor width="200" height="200">
     <circle #cursorCircle cx="100" cy="100" r="100" fill="#7F47DD" class="cursor-circle" />
-</svg>
+</svg> -->
 <canvas #canvas id="canvas" style="height: 100vh; width: 100vw;"></canvas>
 <div class="logo">
     Renae Ruschill
@@ -9,6 +9,62 @@
 <h1 class="headline">
     Traversing the strange and wonderful borderlands between design and engineering since 2016.
 </h1>
-<div class="white-divider">
-    <h2>Project Shit Here</h2>
+<div class="card">
+    <div class="title-grid">
+        <div class="title">
+            <span class="pre-title">WEARABLE SAFETY TECH</span>
+            <h2>Lead Product Designer</h2>
+        </div>
+        <div class="description">
+            <p>
+                As Lead Product Designer for <a href="https://makusafe.com" target="_blank">M<span class="diacritic orange">a</span>kuSafe</a>, I design software for a unique problem space: hazard detection in industrial workplaces.
+            </p>
+            <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
+            <div [@collapse]="!makuExpand ? true : false" style="overflow: hidden;">
+                <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably with our primary users, industrial safety professionals.</p>
+                <p>My work has included several large projects such as a major overall 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
+                <p style="margin-bottom: 0;">I actively participate as a full stack designer: defining technical requirements and leading front-end development on our software team.</p>
+            </div>
+            <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
+            <hr/>
+            <ul class="list tech">
+                <li>HTML</li>
+                <li>CSS/SCSS</li>
+                <li>Typescript</li>
+                <li>Angular</li>
+                <li>SwiftUI</li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h3>Feature Development: Motion Explorer</h3>
+        <div class="bubble" style="background-image: url('/assets/images/motion-explorer/motion_explorer_cover.jpg')">
+            <!-- <div class="project-information-bg">
+            </div>
+            <div class="project-information">
+                <span class="pre-title">FEATURE CASE STUDY</span>
+                <h3 class="project-title">Motion Explorer</h3>
+                <p>Workers are able to pair their wearable device with their phone to allow for remote, cellular-based safety notifications, as well as access to their own data.</p>
+            </div> -->
+        </div>
+        <div class="grid">
+            <div>
+                <h3>M<span class="diacritic">a</span>kuSmart Cloud Software</h3>
+                <div class="bubble" style="background-image: url('/assets/images/makusmart/makusmart_cover.jpg')">
+                </div>
+            </div>
+            <div>
+                <h3>Frontline Worker iOS App</h3>
+                <div class="bubble" style="background-image: url('/assets/images/remote-worker/mobile_cover.jpg')">
+                    <!-- <div class="project-information-bg">
+                    </div>
+                    <div class="project-information">
+                        <span class="pre-title">COMING SOON</span>
+                        <h3 class="project-title">Frontline Worker Mobile App</h3>
+                        <p>Workers are able to pair their wearable device with their phone to allow for remote, cellular-based safety notifications, as well as access to their own data.</p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

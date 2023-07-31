@@ -5,12 +5,28 @@ import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import anime from 'animejs/lib/anime.es.js';
+import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('collapse', [
+      state(
+        'false',
+        style({
+          height: AUTO_STYLE,
+          opacity: 1,
+          visibility: AUTO_STYLE,
+        })
+      ),
+      state('true', style({height: '0', opacity: 0, visibility: 'hidden'})),
+      transition('false => true', animate(300 + 'ms ease-in')),
+      transition('true => false', animate(300 + 'ms ease-out')),
+    ]),
+  ],
 })
 
 export class AppComponent implements OnInit, AfterViewInit {
@@ -31,20 +47,20 @@ export class AppComponent implements OnInit, AfterViewInit {
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     this.mouseCoords = this.getMousePos(event);
-    this.setCursorPosition(event);
+    // this.setCursorPosition(event);
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
-    this.scaleCursor(event, 0.25);
-    this.customCursorCircle.nativeElement.classList.add('animate');
-  }
+  // @HostListener('mousedown', ['$event'])
+  // onMouseDown(event: MouseEvent) {
+  //   this.scaleCursor(event, 0.25);
+  //   this.customCursorCircle.nativeElement.classList.add('animate');
+  // }
 
-  @HostListener('mouseup', ['$event'])
-  onMouseUp(event: MouseEvent) {
-    this.scaleCursor(event, 1);
-    this.customCursorCircle.nativeElement.classList.remove('animate');
-  }
+  // @HostListener('mouseup', ['$event'])
+  // onMouseUp(event: MouseEvent) {
+  //   this.scaleCursor(event, 1);
+  //   this.customCursorCircle.nativeElement.classList.remove('animate');
+  // }
 
   //? Helper Properties (Private Properties);
   private camera!: THREE.PerspectiveCamera;
@@ -61,6 +77,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   private islandObj;
 
   private controls: OrbitControls;
+
+  makuExpand = false;
 
   /**
    * Create the scene
@@ -218,4 +236,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       scale +
       ")";
   };
+
+  toggleMakuCollapse() {
+    this.makuExpand = !this.makuExpand;
+  }
 }
