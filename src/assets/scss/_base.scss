@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'typography';
+@import 'music-player';
 
 @font-face {
     font-family: 'Goudy';
@@ -9,6 +10,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Goudy';
 }
 
 #canvas {
@@ -25,7 +27,6 @@ body {
     height: auto;
     font-size: 32px;
     margin: 0;
-    font-family: 'Goudy';
     background: -webkit-linear-gradient(right bottom, $pink, $purple, $blue );
     //background: -webkit-linear-gradient(right bottom, $pink, $blue, $purple );
     -webkit-background-clip: text;
@@ -39,22 +40,22 @@ body {
     right: 20px;
 }
 
-.card {
-    box-sizing: border-box;
-    font-family: 'Goudy';
-    padding: 40px 170px;
-    position: relative;
-    background: white;
-    // height: 500px;
-    //width: calc(100% - 80px);
-    width: 100%;
-    z-index: 20;
-    //border-radius: 24px;
+h1 + .card {
     margin: -100px auto 100px auto;
     box-shadow: 0px -4.664663791656494px 3.623039960861206px 0px rgba(40, 4, 92, 0.02),
         0px -12.897198677062988px 10.017241477966309px 0px rgba(40, 4, 92, 0.04),
         0px -31.051485061645508px 24.117658615112305px 0px rgba(40, 4, 92, 0.05),
         0px -103px 80px 0px rgba(40, 4, 92, 0.07);
+}
+
+.card {
+    box-sizing: border-box;
+    padding: 40px 170px;
+    position: relative;
+    background: white;
+    width: 100%;
+    z-index: 20;
+    margin: 0 auto;
 
     .grid {
         margin-top: 40px;
@@ -157,4 +158,12 @@ body {
     border: 0;
     background: none;
     color: $blue;
+}
+
+footer {
+    p {
+        text-transform: uppercase;
+        font-size: 14px;
+        font-family: 'Fira Code';
+    }
 }

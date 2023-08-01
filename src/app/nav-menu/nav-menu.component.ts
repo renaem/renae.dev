@@ -50,18 +50,41 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
     let component: NavMenuComponent = this;
+    let totalRotation = 0;
     (function render() {
+      const rotationSpeed = 0.0025;
+      const rotationDelta = rotationSpeed * Math.PI / 2;
+
       if(!component.pillOneHover) {
-        component.pillOne.rotation.x -= 0.0025;
-        component.pillOne.rotation.y -= 0.0025;
+        component.pillOne.rotation.x -= rotationDelta;
+        component.pillOne.rotation.y -= rotationDelta;
       }
       if(!component.pillTwoHover) {
-       component.pillTwo.rotation.y += 0.0025;
+       component.pillTwo.rotation.y += rotationDelta;
       }
       if(!component.pillThreeHover) {
-        component.pillThree.rotation.x += 0.0025;
-        component.pillThree.rotation.y -= 0.0025;
+        component.pillThree.rotation.x += rotationDelta;
+        component.pillThree.rotation.y -= rotationDelta;
       }
+
+      // Update the total rotation
+      totalRotation += rotationDelta;
+      
+      // Check if the total rotation has exceeded 365 degrees (2 * PI radians)
+      if (totalRotation >= Math.PI + (Math.PI / 2)) {
+        // Reset the total rotation
+        totalRotation = 0;
+
+        // Reset all capsule's rotation to its original position
+        component.pillOne.rotation.x = Math.PI / 2;
+        component.pillOne.rotation.z = Math.PI / 2;
+
+        component.pillTwo.rotation.x = Math.PI / 2;
+        component.pillTwo.rotation.z = Math.PI / 2;
+
+        component.pillThree.rotation.x = Math.PI / 2;
+      }
+
       requestAnimationFrame(render);
       component.renderer.render(component.scene, component.camera);
     }());

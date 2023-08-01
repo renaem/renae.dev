@@ -1,7 +1,6 @@
 h1 {
     font-size: 48px;
     line-height: 48px;
-    font-family: 'Goudy';
     background: -webkit-linear-gradient(right bottom, $pink, $orange );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -12,7 +11,6 @@ h2 {
     font-size: 36px;
     line-height: 40px;
     margin-bottom: 0;
-    font-family: 'Goudy';
     display: inline-block;
     background: -webkit-linear-gradient(right bottom, $pink, $orange );
     -webkit-background-clip: text;
@@ -37,7 +35,26 @@ h4 {
 }
 
 a {
-    color: $orange;
+    color: $blue;
+    transition: 0.3s all;
+
+    &:hover {
+        color: $purple;
+
+        .diacritic::after {
+            background-color: $purple
+        }
+    }
+
+    .diacritic::after {
+        background-color: $blue;
+    }
+}
+
+hr {
+    border-top: 1px solid rgba(black, 0.1);
+    border-bottom: 0;
+    margin: 20px 0;
 }
 
 .headline {
@@ -59,6 +76,7 @@ a {
     font-size: inherit;
 
     &::after {
+        transition: 0.3s all;
         content: '';
         position: absolute;
         top: 33%;
@@ -78,6 +96,7 @@ a {
 }
 
 .pre-title {
+    display: inline-block;
     padding: 4px 12px;
     font-size: 14px;
     color: white;

@@ -47,20 +47,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     this.mouseCoords = this.getMousePos(event);
-    // this.setCursorPosition(event);
   }
-
-  // @HostListener('mousedown', ['$event'])
-  // onMouseDown(event: MouseEvent) {
-  //   this.scaleCursor(event, 0.25);
-  //   this.customCursorCircle.nativeElement.classList.add('animate');
-  // }
-
-  // @HostListener('mouseup', ['$event'])
-  // onMouseUp(event: MouseEvent) {
-  //   this.scaleCursor(event, 1);
-  //   this.customCursorCircle.nativeElement.classList.remove('animate');
-  // }
 
   //? Helper Properties (Private Properties);
   private camera!: THREE.PerspectiveCamera;
@@ -157,6 +144,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.camera.position.set(5, 8, -5);
   }
 
+  rgb(r, g, b) {
+    return new THREE.Vector3(r, g, b);
+  }
+
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
@@ -193,6 +184,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       if(!component.scene.children[1]) {
         return;
       }
+
       component.scene.children[1].rotation.y = THREE.MathUtils.lerp(component.scene.children[1]?.rotation.y, (component.mouseCoords.x * Math.PI) / 10000 - 0.5, 0.05)
       component.renderer.render(component.scene, component.camera);
       component.controls.update();
@@ -213,29 +205,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   private getMousePos(event: MouseEvent) {
     return { x: event.clientX, y: event.clientY };
   }
-
-  private setCursorPosition(event: MouseEvent) {
-    let xPosition = event.clientX - this.customCursor.nativeElement.clientWidth / 2 + "px";
-    let yPosition = event.clientY - this.customCursor.nativeElement.clientHeight / 2 + "px";
-    this.customCursor.nativeElement.style.transform =
-      "translate(" + xPosition + "," + yPosition + ") scale(1)";
-    return {
-      x: xPosition,
-      y: yPosition
-    };
-  }
-
-  private scaleCursor(e, scale) {
-    this.setCursorPosition(e);
-    this.customCursor.nativeElement.style.transform =
-      "translate(" +
-      this.setCursorPosition(e).x +
-      "," +
-      this.setCursorPosition(e).y +
-      ") scale(" +
-      scale +
-      ")";
-  };
 
   toggleMakuCollapse() {
     this.makuExpand = !this.makuExpand;

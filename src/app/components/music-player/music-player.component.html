@@ -1,0 +1,37 @@
+<div *ngIf="recentTrack && recentTrack['@attr']?.nowplaying === 'true'" class="now-playing">
+    <div class="record-player">
+      <div class="record spin">
+        <div class="middle"></div>
+        <div class="inner"></div>
+        <img [src]="recentTrack.image[2]['#text']" alt=""/>
+      </div>
+      <img class="arm" src="/assets/images/record_arm.svg" alt=""/>
+    </div>
+    <div>
+      <span class="pre-title">Now Playing</span>
+      <h3>♪ {{ recentTrack.name }}</h3>
+      <i>{{ recentTrack.artist['#text'] }}</i>
+    </div>
+</div>
+<div *ngIf="recentTrack && !recentTrack['@attr']" class="last-played">
+    <div class="record-player">
+      <div class="record">
+        <div class="middle"></div>
+        <div class="inner"></div>
+        <img [src]="recentTrack.image[2]['#text']" alt=""/>
+      </div>
+      <img class="arm put-away" src="/assets/images/record_arm.svg" alt=""/>
+    </div>
+    <div>
+      <span class="pre-title">Last Played</span>
+      <h3>{{ recentTrack.name }}</h3>
+      <i>{{ recentTrack.artist['#text'] }}</i>
+      <div>
+        <span class="label">
+          {{ recentTrack.date['#text'] | date:'MMM d, h:mm a':'UTC-10' }}
+        </span>
+      </div>
+    </div>
+</div>
+<hr>
+<p class="attribute">Spotify data via the <a href="https://www.last.fm/api" target="_blank">LastFM API</a></p>
