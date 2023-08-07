@@ -6,6 +6,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import anime from 'animejs/lib/anime.es.js';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
+import { AnimationOptions } from 'ngx-lottie';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   private camera!: THREE.PerspectiveCamera;
 
   private get canvas(): HTMLCanvasElement {
-    return this.canvasRef.nativeElement;
+    return this.canvasRef?.nativeElement;
   }
 
   private gltfLoader = new GLTFLoader();
@@ -66,6 +67,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   private controls: OrbitControls;
 
   makuExpand = false;
+
+  isLoaded = false;
+
+  lottieOptions: AnimationOptions = {
+    path: '/assets/r.json',
+  };
 
   /**
    * Create the scene
@@ -115,6 +122,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.islandObj = gltf.scene;
 
       this.scene.add(this.islandObj);
+
+      this.isLoaded = true;
     });
 
     //Create a DirectionalLight and turn on shadows for the light
@@ -149,7 +158,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private getAspectRatio() {
-    return this.canvas.clientWidth / this.canvas.clientHeight;
+    return this.canvas?.clientWidth / this.canvas?.clientHeight;
   }
 
   /**
@@ -172,7 +181,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.renderer.setPixelRatio(devicePixelRatio);
     //this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setSize(this.canvas?.clientWidth, this.canvas?.clientHeight);
     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     this.controls.enableZoom = false;
     this.controls.enablePan = false;

@@ -1,94 +1,108 @@
-<!-- <svg id="cursor" #cursor width="200" height="200">
-    <circle #cursorCircle cx="100" cy="100" r="100" fill="#7F47DD" class="cursor-circle" />
-</svg> -->
+<div *ngIf="!isLoaded" style="position: absolute; top: 0; left: 0; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background-color: white;">
+    <img width="100" height="100" src="/assets/loading-r.gif" />
+</div>
 <canvas #canvas id="canvas" style="height: 100vh; width: 100vw;"></canvas>
-<div class="logo">
-    Renae Ruschill
-</div>
-<app-nav-menu class="nav"></app-nav-menu>
-<h1 class="headline">
-    Traversing the strange and wonderful borderlands between design and engineering since 2016.
-</h1>
-<div class="card">
-    <div class="title-grid">
-        <div class="title">
-            <span class="pre-title">WEARABLE SAFETY TECH</span>
-            <h2>Lead Product Designer</h2>
-        </div>
-        <div class="description">
-            <p>
-                As Lead Product Designer for <a href="https://makusafe.com" target="_blank">M<span class="diacritic">a</span>kuSafe</a>, I design software for a unique problem space: hazard detection in industrial workplaces.
-            </p>
-            <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
-            <div [@collapse]="!makuExpand ? true : false" style="overflow: hidden;">
-                <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably with our primary users, industrial safety professionals.</p>
-                <p>My work has included several large projects such as a major overall 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
-                <p style="margin-bottom: 0;">I actively participate as a full stack designer: defining technical requirements and leading front-end development on our software team.</p>
-            </div>
-            <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
-            <hr/>
-            <ul class="list tech">
-                <li>HTML</li>
-                <li>CSS/SCSS</li>
-                <li>Typescript</li>
-                <li>Angular</li>
-                <li>SwiftUI</li>
-            </ul>
-        </div>
+<div [hidden]="!isLoaded">
+    <div class="logo">
+        Renae Ruschill
     </div>
-    <div>
-        <h3>Feature Development: Motion Explorer</h3>
-        <div class="bubble" style="background-image: url('/assets/images/motion-explorer/motion_explorer_cover.jpg')">
+    <app-nav-menu *ngIf="isLoaded" class="nav"></app-nav-menu>
+    <h1 class="headline">
+        Traversing the strange and wonderful borderlands between design and engineering since 2016.
+    </h1>
+    <div class="card">
+        <div class="title-grid">
+            <div class="title">
+                <span class="pre-title">WEARABLE SAFETY TECH</span>
+                <h2>Lead Product Designer</h2>
+            </div>
+            <div class="description">
+                <p>
+                    As Lead Product Designer for <a href="https://makusafe.com" target="_blank">M<span class="diacritic">a</span>kuSafe</a>, I design software for a unique problem space: hazard detection in industrial workplaces.
+                </p>
+                <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
+                <div [@collapse]="!makuExpand ? true : false" style="overflow: hidden;">
+                    <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably with our primary users, industrial safety professionals.</p>
+                    <p>My work has included several large projects such as a major overall 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
+                    <p style="margin-bottom: 0;">I actively participate as a full stack designer: defining technical requirements and leading front-end development on our software team.</p>
+                </div>
+                <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
+                <hr/>
+                <ul class="list tech">
+                    <li>HTML</li>
+                    <li>CSS/SCSS</li>
+                    <li>Typescript</li>
+                    <li>Angular</li>
+                    <li>SwiftUI</li>
+                </ul>
+            </div>
         </div>
-        <div class="grid">
-            <div>
-                <h3>M<span class="diacritic">a</span>kuSmart Cloud Software</h3>
-                <div class="bubble" style="background-image: url('/assets/images/makusmart/makusmart_cover.jpg')">
+        <div>
+            <h3>Feature Development: Motion Explorer</h3>
+            <div class="bubble">
+                <img src="/assets/images/motion-explorer/motion_explorer_cover.jpg" alt="Images of sketches leading up to the motion explorer.." />
+            </div>
+            <div class="grid">
+                <div>
+                    <h3>M<span class="diacritic">a</span>kuSmart Cloud Software</h3>
+                    <div class="bubble">
+                        <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Images of the MakuSmart Cloud Platform." />
+                    </div>
+                </div>
+                <div>
+                    <h3>Frontline Worker iOS App</h3>
+                    <div class="bubble">
+                        <img src="/assets/images/remote-worker/mobile_cover.jpg" alt="Images of the Remote Worker mobile app for iOS." />
+                    </div>
                 </div>
             </div>
-            <div>
-                <h3>Frontline Worker iOS App</h3>
-                <div class="bubble" style="background-image: url('/assets/images/remote-worker/mobile_cover.jpg')">
-                </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="title-grid">
+            <div class="title">
+                <span class="pre-title">OTHER WORK</span>
+                <h2>Brand & Product Designer</h2>
+            </div>
+            <div class="description">
+                <p>
+                    Prior to my full time product job, I spent a lot of time consulting—whether through an agency or on my own. A few of my favorite past projects have included brand work in addition to design systems, product design, and front-end development.
+                </p>
+                <hr/>
+                <ul class="list tech">
+                    <li>HTML</li>
+                    <li>CSS/SCSS</li>
+                    <li>Typescript</li>
+                    <li>Angular</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h3>Updo Brand System</h3>
+            <div class="bubble">
+                <img src="/assets/images/updo_cover.jpg" alt="Updo Brand System Imagery" />
+            </div>
+        </div>
+        <div>
+            <h3>We Write Code Brand Collateral</h3>
+            <div class="bubble">
+                <img src="/assets/images/wwc_cover.jpg" alt="We Write Code Brand Collateral Imagery" />
+                <img src="/assets/images/wwc_site.gif" alt="We Write Code Website Gif" class="wwc-gif" />
+            </div>
+        </div>
+        <div>
+            <h3>GM Binder Kickstarter</h3>
+            <div class="bubble">
+                <img src="/assets/images/gmb_cover.jpg" alt="GM Binder Kickstarter Imagery" />
             </div>
         </div>
     </div>
-</div>
-<div class="card">
-    <div class="title-grid">
-        <div class="title">
-            <span class="pre-title">OTHER WORK</span>
-            <h2>Brand & Product Designer</h2>
-        </div>
-        <div class="description">
-            <p>
-                Prior to my full time product job, I spent a lot of time consulting—whether through an agency or freelance. A few of my favorite past projects have included brand work in addition to design systems, product design, and front-end development.
-            </p>
-            <hr/>
-            <ul class="list tech">
-                <li>HTML</li>
-                <li>CSS/SCSS</li>
-                <li>Typescript</li>
-                <li>Angular</li>
-            </ul>
-        </div>
+    <div class="card">
+        <app-music-player>
+        </app-music-player>
     </div>
-    <div>
-        <h3>Updo Brand System</h3>
-        <div class="bubble">
-        </div>
-    </div>
-    <div>
-        <h3>We Write Code Brand Collateral</h3>
-        <div class="bubble">
-        </div>
-    </div>
+    <footer class="card" style="display: flex; justify-content: space-between;">
+        <p>Like the Sagrada Familia, site construction never ends</p>
+        <p>Come again soon 🌞</p>
+    </footer>
 </div>
-<div class="card">
-    <app-music-player>
-    </app-music-player>
-</div>
-<footer class="card" style="display: flex; justify-content: space-between;">
-    <p>Site construction never ends (think Sagrada Familia)</p>
-    <p>Come again soon 🌞</p>
-</footer>
