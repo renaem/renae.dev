@@ -1,15 +1,30 @@
-<div *ngIf="!isLoaded" style="position: absolute; top: 0; left: 0; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background-color: white;">
+<div *ngIf="!isLoaded" style="z-index: 100; position: absolute; top: 0; left: 0; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background-color: white;">
     <img width="100" height="100" src="/assets/loading-r.gif" />
 </div>
-<canvas #canvas id="canvas" style="height: 100vh; width: 100vw;"></canvas>
+<canvas #canvas id="canvas"></canvas>
 <div [hidden]="!isLoaded">
     <div class="logo">
         Renae Ruschill
     </div>
     <app-nav-menu *ngIf="isLoaded" class="nav"></app-nav-menu>
-    <h1 class="headline">
-        Traversing the strange and wonderful borderlands between design and engineering since 2016.
-    </h1>
+    <nav class="mobile-nav">
+        <ul>
+            <li>
+                <a class="nav-link" href="/work">WORK</a>
+            </li>
+            <li>
+                <a class="nav-link" href="/resume">RESUME</a>
+            </li>
+            <li>
+                <a class="nav-link" target="_blank" href="mailto:renaemeines@gmail.com">CONTACT</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="headline-bubble">
+        <h1 class="headline">
+            Traversing the strange and wonderful borderlands between design and engineering since 2016.
+        </h1>
+    </div>
     <div class="card">
         <div class="title-grid">
             <div class="title">
@@ -22,9 +37,9 @@
                 </p>
                 <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
                 <div [@collapse]="!makuExpand ? true : false" style="overflow: hidden;">
-                    <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably with our primary users, industrial safety professionals.</p>
-                    <p>My work has included several large projects such as a major overall 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
-                    <p style="margin-bottom: 0;">I actively participate as a full stack designer: defining technical requirements and leading front-end development on our software team.</p>
+                    <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably while consulting our primary users: industrial safety professionals.</p>
+                    <p>My work has included several large projects such as a major 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
+                    <p style="margin-bottom: 0;">I actively participate as a full stack designer / product engineer: defining technical requirements and leading front-end development on our software team; seeing every project through from conception to completion to revision and beyond.</p>
                 </div>
                 <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
                 <hr/>
@@ -66,7 +81,7 @@
             </div>
             <div class="description">
                 <p>
-                    Prior to my full time product job, I spent a lot of time consulting—whether through an agency or on my own. A few of my favorite past projects have included brand work in addition to design systems, product design, and front-end development.
+                    Prior to my full time product job, I was consulting—whether through an agency or on my own. A few of my favorite past projects have included brand work in addition to design systems, product design, and front-end development.
                 </p>
                 <hr/>
                 <ul class="list tech">

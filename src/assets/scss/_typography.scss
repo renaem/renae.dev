@@ -1,10 +1,16 @@
 h1 {
-    font-size: 48px;
-    line-height: 48px;
+    font-size: 32px;
+    line-height: 32px;
     background: -webkit-linear-gradient(right bottom, $pink, $orange );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     padding: 10px 0;
+    font-weight: 500;
+
+    @media screen and (min-width: $screen-md) {
+        font-size: 48px;
+        line-height: 48px;
+    }
 }
 
 h2 {
@@ -20,6 +26,7 @@ h2 {
 
 h2, h3 {
     margin-top: 0px;
+    font-weight: 500;
 }
 
 h3 {
@@ -57,12 +64,31 @@ hr {
     margin: 20px 0;
 }
 
-.headline {
+.headline-bubble {
+    box-sizing: border-box;
     position: absolute;
-    right: 125px;
-    max-width: 650px;
-    top: 340px;
-    text-align: right;
+    width: calc(100% - 40px);
+    left: 20px;
+    bottom: 20px;
+    text-align: center;
+    z-index: 1;
+    // background: rgba(white, 0.5);
+    // border-radius: 24px;
+    // padding: 20px;
+
+    @media screen and (min-width: $screen-md) {
+        right: 125px;
+        left: auto;
+        top: 340px;
+        bottom: auto;
+        max-width: 650px;
+        background: transparent;
+        text-align: right;
+    }
+}
+
+.headline {
+    margin: 0;
 }
 
 .pre-title {

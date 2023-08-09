@@ -4,10 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import anime from 'animejs/lib/anime.es.js';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
-import { AnimationOptions } from 'ngx-lottie';
-
 
 @Component({
   selector: 'app-root',
@@ -32,8 +29,6 @@ import { AnimationOptions } from 'ngx-lottie';
 
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') private canvasRef: ElementRef;
-  @ViewChild('cursor') private customCursor: ElementRef;
-  @ViewChild('cursorCircle') private customCursorCircle: ElementRef;
 
   //* Stage Properties
   @Input() public fieldOfView: number = 3;
@@ -48,6 +43,33 @@ export class AppComponent implements OnInit, AfterViewInit {
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     this.mouseCoords = this.getMousePos(event);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResizeWindow(event: UIEvent) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspectRatio = this.getAspectRatio();
+
+    this.canvas.width = width * aspectRatio;
+    this.canvas.height = height * aspectRatio;
+    this.canvas.style.width = `${width}px`;
+    this.canvas.style.height = `${height}px`;
+    this.renderer.setSize(width, height);
+    this.camera.left = - this.fieldOfView * aspectRatio;
+    this.camera.right = this.fieldOfView * aspectRatio;
+
+    if(screen.width > 768) {
+      this.camera.zoom = 1.25;
+      this.scene.children[1].position.x = 1.55;
+      this.scene.children[1].position.z = 1.55;
+    } else {
+      this.camera.zoom = 0.75;
+      this.scene.children[1].position.x = 0;
+      this.scene.children[1].position.z = 0;
+    }
+
+    this.camera.updateProjectionMatrix();
   }
 
   //? Helper Properties (Private Properties);
@@ -69,10 +91,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   makuExpand = false;
 
   isLoaded = false;
-
-  lottieOptions: AnimationOptions = {
-    path: '/assets/r.json',
-  };
 
   /**
    * Create the scene
@@ -116,12 +134,23 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
       } );
 
-      gltf.scene.position.x = gltf.scene.position.x + 1.55;
-      gltf.scene.position.z = gltf.scene.position.z + 1.55;
+      // Offset for desktop+ sizes
+      if(screen.width > 768) {
+        gltf.scene.position.x = 1.55;
+        gltf.scene.position.z = 1.55;
+      }
 
       this.islandObj = gltf.scene;
 
       this.scene.add(this.islandObj);
+
+      if(screen.width > 768) {
+        this.camera.zoom = 1.1;
+      } else {
+        this.camera.zoom = 0.75;
+      }
+
+      this.camera.updateProjectionMatrix();
 
       this.isLoaded = true;
     });
