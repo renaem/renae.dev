@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'typography';
 @import 'music-player';
+@import 'nav';
 
 @font-face {
     font-family: 'Goudy';
@@ -22,13 +23,20 @@ body {
     background-image: url('/assets/images/gradient-bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 720px;
+    min-height: 700px;
     width: 100vw;
-    min-height: 600px;
     pointer-events: none;
 
-    @media screen and (min-width: $screen-md) {
+    @media screen and (min-width: $screen-lg) {
+        height: 800px;
+        min-height: 800px;
+    }
+
+    @media screen and (min-width: $screen-xl) {
         pointer-events: all;
+        height: 100vh;
+        width: 100vw;
     }
 }
 
@@ -40,7 +48,7 @@ body {
     width: 100%;
     height: auto;
     text-align: center;
-    font-size: 32px;
+    font-size: 40px;
     margin: 0;
     background: -webkit-linear-gradient(right bottom, $pink, $purple, $blue );
     //background: -webkit-linear-gradient(right bottom, $pink, $blue, $purple );
@@ -48,6 +56,7 @@ body {
     -webkit-text-fill-color: transparent;
 
     @media screen and (min-width: $screen-md) {
+        font-size: 32px;
         left: 40px;
         width: 200px;
         text-align: left;
@@ -91,11 +100,15 @@ body {
 }
 
 .headline-bubble + .card {
-    margin: -100px auto 100px auto;
     box-shadow: 0px -4.664663791656494px 3.623039960861206px 0px rgba(40, 4, 92, 0.02),
         0px -12.897198677062988px 10.017241477966309px 0px rgba(40, 4, 92, 0.04),
         0px -31.051485061645508px 24.117658615112305px 0px rgba(40, 4, 92, 0.05),
         0px -103px 80px 0px rgba(40, 4, 92, 0.07);
+    margin: -40px auto 40px auto;
+
+    @media screen and (min-width: $screen-md) {
+        margin: -100px auto 100px auto;
+    }
 }
 
 .card {
@@ -185,10 +198,14 @@ body {
 
     &.tech {
         li {
-            font-size: 12px;
+            font-size: 18px;
             color: $pink;
             font-family: 'Fira Code';
             text-transform: uppercase;
+
+            @media screen and (min-width: $screen-md) {
+                font-size: 12px;
+            }
         }
     }
 }
@@ -225,26 +242,6 @@ body {
     }
 }
 
-#cursor {
-    position: fixed;
-    pointer-events: none;
-    transform: none;
-    transform-origin: center center;
-    transition: all 300ms ease-out;
-    padding: 2px;
-    z-index: 10;
-    mix-blend-mode: plus-lighter;
-}
-.cursor-circle {
-    stroke-dasharray: 500;
-    stroke-dashoffset: 1000;
-    transition: stroke-dashoffset 5s ease-out;
-}
-.cursor-circle.animate {
-    stroke-dashoffset: 0;
-    /* stroke: white; */
-}
-
 .collapsor {
     position: relative;
     display: block;
@@ -253,12 +250,111 @@ body {
     border: 0;
     background: none;
     color: $blue;
+    font-size: 16px;
+
+    @media screen and (min-width: $screen-md) {
+        font-size: 14px;
+    }
+}
+
+.shimmer-button {
+    border: 0;
+    background: none;
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+
+    .social-icon {
+        transition: 0.3s;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    svg {
+        transition: 0.3s all;
+        height: 36px;
+        width: 36px; 
+    }
+
+    &:first-of-type {
+        .social-icon {
+            &:first-child {
+                svg {
+                    fill: url(#MyGradient);
+                    opacity: 1;
+                }
+            }
+            &:last-child {
+                svg {
+                    fill: url(#MyGradient2);
+                    opacity: 0;
+                }
+            }
+        }  
+    }
+
+    &:last-of-type {
+        .social-icon {
+            &:first-child {
+                svg {
+                    fill: url(#MyGradient3);
+                    opacity: 1;
+                }
+            }
+            &:last-child {
+                svg {
+                    fill: url(#MyGradient4);
+                    opacity: 0;
+                }
+            }
+        }  
+    }
+
+    &:hover {
+        .social-icon {
+            transform: scale(1.1);
+        }
+        .social-icon:first-child svg {
+            opacity: 0;
+        }
+        .social-icon:last-child svg {
+            opacity: 1;
+        }
+    }
 }
 
 footer {
+    display: flex;
+    flex-direction: column;
+
     p {
         text-transform: uppercase;
         font-size: 14px;
         font-family: 'Fira Code';
+        text-align: center;
+    }
+
+    @media screen and (min-width: $screen-md) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        p {
+            text-align: left;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 8px;
+        background: linear-gradient(to right, $orange, $pink, $purple, $blue, $green);
     }
 }

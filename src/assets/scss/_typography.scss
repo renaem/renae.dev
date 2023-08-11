@@ -1,13 +1,24 @@
 h1 {
     font-size: 32px;
     line-height: 32px;
-    background: -webkit-linear-gradient(right bottom, $pink, $orange );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: white;
+    text-shadow: 0px 4px 20px rgba(31, 0, 83, 1),
+        0px 1px 4px rgba(127, 71, 221, 1),
+        0px 3.1525516510009766px 8.873617172241211px rgba(52, 164, 232, 1),
+        0px 9.052370071411133px 15px rgba(248, 87, 166, 1);
     padding: 10px 0;
     font-weight: 500;
 
     @media screen and (min-width: $screen-md) {
+        font-size: 40px;
+        line-height: 40px;
+        text-shadow: none;
+        background: -webkit-linear-gradient(right bottom, $pink, $orange );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    @media screen and (min-width: $screen-xl) {
         font-size: 48px;
         line-height: 48px;
     }
@@ -72,23 +83,34 @@ hr {
     bottom: 20px;
     text-align: center;
     z-index: 1;
+    top: 440px;
     // background: rgba(white, 0.5);
     // border-radius: 24px;
     // padding: 20px;
 
     @media screen and (min-width: $screen-md) {
-        right: 125px;
+        right: 60px;
         left: auto;
-        top: 340px;
+        top: 250px;
         bottom: auto;
-        max-width: 650px;
+        max-width: 400px;
         background: transparent;
         text-align: right;
+    }
+
+    @media screen and (min-width: $screen-lg) {
+        top: 300px;
+        max-width: 500px;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+        top: 340px;
+        max-width: 650px;
     }
 }
 
 .headline {
-    margin: 0;
+    margin: 0 0 24px 0;
 }
 
 .pre-title {

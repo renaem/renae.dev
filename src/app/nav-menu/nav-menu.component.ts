@@ -62,14 +62,14 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
       if(!component.pillTwoHover) {
        component.pillTwo.rotation.y += rotationDelta;
       }
-      if(!component.pillThreeHover) {
-        component.pillThree.rotation.x += rotationDelta;
-        component.pillThree.rotation.y -= rotationDelta;
-      }
+      // if(!component.pillThreeHover) {
+      //   component.pillThree.rotation.x += rotationDelta;
+      //   component.pillThree.rotation.y -= rotationDelta;
+      // }
 
       // Update the total rotation
       totalRotation += rotationDelta;
-      
+
       // Check if the total rotation has exceeded 365 degrees (2 * PI radians)
       if (totalRotation >= Math.PI + (Math.PI / 2)) {
         // Reset the total rotation
@@ -82,7 +82,7 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
         component.pillTwo.rotation.x = Math.PI / 2;
         component.pillTwo.rotation.z = Math.PI / 2;
 
-        component.pillThree.rotation.x = Math.PI / 2;
+        // component.pillThree.rotation.x = Math.PI / 2;
       }
 
       requestAnimationFrame(render);
@@ -90,13 +90,17 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
     }());
   }
 
+  private getAspectRatio() {
+    return this.canvas?.clientWidth / this.canvas?.clientHeight;
+  }
 
   private createScene() {
     //* Scene
     this.scene = new THREE.Scene();
 
     //* Camera
-    this.camera = new THREE.OrthographicCamera( this.canvas.clientWidth / - 40, this.canvas.clientWidth / 40, this.canvas.clientHeight / 40, this.canvas.clientHeight / - 40, 1, 1000 );
+    let aspectRatio = this.getAspectRatio();
+    this.camera = new THREE.OrthographicCamera( -3 * aspectRatio, 3 * aspectRatio, 3, -3, 1, 1000 );
     this.camera.position.z = 5;
 
     const directionLight: THREE.DirectionalLight = new THREE.DirectionalLight( 0x34A4E8, 1);
@@ -152,24 +156,26 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
 
     //* Pill/Nav Link 1
     this.pillOne = new THREE.Mesh(pillGeometry, gradientMaterial);
-    this.pillOne.position.x = -7.7;
+    // this.pillOne.position.x = -7.7;
+    this.pillOne.position.x = -3.35;
     this.pillOne.rotation.x = Math.PI / 2;
     this.pillOne.rotation.z = Math.PI / 2;
     this.scene.add(this.pillOne);
 
     //* Pill/Nav Link 2
     this.pillTwo = new THREE.Mesh(pillGeometry, gradientMaterial);
-    this.pillTwo.position.x = 0.3;
+    // this.pillTwo.position.x = 0.3;
+    this.pillTwo.position.x = 5.2;
     this.pillTwo.rotation.x = Math.PI / 2;
     this.pillTwo.rotation.z = Math.PI / 2;
     this.scene.add(this.pillTwo);
 
     //* Pill/Nav Link 3
-    this.pillThree = new THREE.Mesh(pillGeometry,gradientMaterial);
-    this.pillThree.position.x = 8.9;
-    this.pillThree.rotation.x = Math.PI / 2;
-    this.pillThree.rotation.z = Math.PI / 2;
-    this.scene.add(this.pillThree);
+    // this.pillThree = new THREE.Mesh(pillGeometry,gradientMaterial);
+    // this.pillThree.position.x = 8.9;
+    // this.pillThree.rotation.x = Math.PI / 2;
+    // this.pillThree.rotation.z = Math.PI / 2;
+    // this.scene.add(this.pillThree);
   }
 
   linkHover(linkId: number, event: MouseEvent) {
@@ -207,23 +213,23 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
         loop: false
       });
     }
-    if(linkId === 3) {
-      this.pillThreeHover = true;
-      anime({
-        targets: [this.pillThree.scale],
-        x: 1.4, y: 1.4, z: 1.4,
-        easing: "cubicBezier(0,1.49,0.5,1)",
-        duration: 300,
-        loop: false
-      });
-      anime({
-        targets: [this.pillThree.rotation],
-        x: Math.PI / 2, y: 0, z: Math.PI / 2,
-        easing: "easeOutQuad",
-        duration: 500,
-        loop: false
-      });
-    }
+    // if(linkId === 3) {
+    //   this.pillThreeHover = true;
+    //   anime({
+    //     targets: [this.pillThree.scale],
+    //     x: 1.4, y: 1.4, z: 1.4,
+    //     easing: "cubicBezier(0,1.49,0.5,1)",
+    //     duration: 300,
+    //     loop: false
+    //   });
+    //   anime({
+    //     targets: [this.pillThree.rotation],
+    //     x: Math.PI / 2, y: 0, z: Math.PI / 2,
+    //     easing: "easeOutQuad",
+    //     duration: 500,
+    //     loop: false
+    //   });
+    // }
   }
 
   linkEndHover(linkId: number, event: MouseEvent) {

@@ -47,26 +47,28 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
   onResizeWindow(event: UIEvent) {
+    console.log(event);
     const width = window.innerWidth;
     const height = window.innerHeight;
     const aspectRatio = this.getAspectRatio();
 
-    this.canvas.width = width * aspectRatio;
-    this.canvas.height = height * aspectRatio;
-    this.canvas.style.width = `${width}px`;
-    this.canvas.style.height = `${height}px`;
-    this.renderer.setSize(width, height);
-    this.camera.left = - this.fieldOfView * aspectRatio;
-    this.camera.right = this.fieldOfView * aspectRatio;
-
-    if(screen.width > 768) {
-      this.camera.zoom = 1.25;
+    if(window.innerWidth > 768) {
+      this.camera.zoom = 1.1;
       this.scene.children[1].position.x = 1.55;
       this.scene.children[1].position.z = 1.55;
+      this.scene.children[1].position.y = 0;
+      this.canvas.width = width * aspectRatio;
+      this.canvas.height = height * aspectRatio;
+      this.canvas.style.width = `${width}px`;
+      this.canvas.style.height = `${height}px`;
+      this.renderer.setSize(width, height);
+      this.camera.left = - this.fieldOfView * aspectRatio;
+      this.camera.right = this.fieldOfView * aspectRatio;
     } else {
-      this.camera.zoom = 0.75;
+      this.camera.zoom = 0.6;
       this.scene.children[1].position.x = 0;
       this.scene.children[1].position.z = 0;
+      this.scene.children[1].position.y = 0.75;
     }
 
     this.camera.updateProjectionMatrix();
@@ -135,19 +137,21 @@ export class AppComponent implements OnInit, AfterViewInit {
       } );
 
       // Offset for desktop+ sizes
-      if(screen.width > 768) {
+      if(window.innerWidth > 768) {
         gltf.scene.position.x = 1.55;
         gltf.scene.position.z = 1.55;
+      } else {
+        gltf.scene.position.y = 0.75;
       }
 
       this.islandObj = gltf.scene;
 
       this.scene.add(this.islandObj);
 
-      if(screen.width > 768) {
+      if(window.innerWidth > 768) {
         this.camera.zoom = 1.1;
       } else {
-        this.camera.zoom = 0.75;
+        this.camera.zoom = 0.6;
       }
 
       this.camera.updateProjectionMatrix();
@@ -216,6 +220,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.controls.enablePan = false;
     this.controls.enableRotate = false;
 
+    console.log(window.innerWidth)
+    if (window.innerWidth < 768) {
+      this.mouseCoords.x = 1200;
+    }
+
     let component: AppComponent = this;
     (function render() {
       requestAnimationFrame(render);
@@ -246,5 +255,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   toggleMakuCollapse() {
     this.makuExpand = !this.makuExpand;
+  }
+
+  goToGithub() {
+    window.open('https://github.com/renaem');
+  }
+
+  goToLinkedIn() {
+    window.open('https://www.linkedin.com/in/renaemeines/');
   }
 }

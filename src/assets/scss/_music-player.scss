@@ -5,7 +5,7 @@
   align-items: center;
   grid-template-columns: 160px 1fr;
 
-  h3 {
+  div h3 {
     margin: 10px 0;
   }
 
@@ -110,4 +110,9 @@
   color: rgba(black, 0.5);
   font-family: 'Fira Code';
   text-transform: uppercase;
+  text-align: center;
+
+  @media screen and (min-width: $screen-md) {
+    text-align: left;
+  }
 }

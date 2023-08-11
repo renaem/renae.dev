@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
+import {AngularSvgIconModule} from 'angular-svg-icon';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { MusicPlayerComponent } from './components/music-player/music-player.com
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    AngularSvgIconModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
