@@ -2,9 +2,9 @@ h1 {
     font-size: 32px;
     line-height: 32px;
     color: white;
-    text-shadow: 0px 4px 20px rgba(31, 0, 83, 1),
-        0px 1px 4px rgba(127, 71, 221, 1),
-        0px 3.1525516510009766px 8.873617172241211px rgba(52, 164, 232, 1),
+    text-shadow: 0px 4px 20px rgba(31, 0, 83, 0.5),
+        0px 1px 4px rgba(52, 164, 232, 1),
+        0px 3.1525516510009766px 8.873617172241211px rgba(127, 71, 221, 1),
         0px 9.052370071411133px 15px rgba(248, 87, 166, 1);
     padding: 10px 0;
     font-weight: 500;
@@ -52,6 +52,15 @@ h4 {
     font-size: 22px;
 }
 
+p {
+    font-size: 20px;
+    text-align: center;
+
+    @media screen and (min-width: $screen-md) {
+        text-align: left;
+    }
+}
+
 a {
     color: $blue;
     transition: 0.3s all;
@@ -70,7 +79,8 @@ a {
 }
 
 hr {
-    border-top: 1px solid rgba(black, 0.1);
+    border-top: 1px solid rgba($blue, 0.25);
+    border-style: dashed;
     border-bottom: 0;
     margin: 20px 0;
 }
@@ -84,9 +94,10 @@ hr {
     text-align: center;
     z-index: 1;
     top: 440px;
-    // background: rgba(white, 0.5);
-    // border-radius: 24px;
-    // padding: 20px;
+    
+    .shimmer-button {
+        display: none;
+    }
 
     @media screen and (min-width: $screen-md) {
         right: 60px;
@@ -96,6 +107,10 @@ hr {
         max-width: 400px;
         background: transparent;
         text-align: right;
+
+        .shimmer-button {
+            display: inline-block;
+        }
     }
 
     @media screen and (min-width: $screen-lg) {
@@ -111,10 +126,6 @@ hr {
 
 .headline {
     margin: 0 0 24px 0;
-}
-
-.pre-title {
-    font-family: 'Fira Code';
 }
 
 .diacritic {
@@ -144,12 +155,18 @@ hr {
 }
 
 .pre-title {
+    font-family: 'Fira Code';
     display: inline-block;
     padding: 4px 12px;
     font-size: 14px;
     color: white;
     border-radius: 24px;
     background-color: $purple;
+    margin: 0 auto;
+
+    @media screen and (min-width: $screen-md) {
+        margin: 0 0 0 auto;
+    }
 }
 
 .project-title {

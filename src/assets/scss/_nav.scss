@@ -47,7 +47,7 @@
       }
     }
 
-    &:last-child {
+    &:nth-child(n + 2) {
       a {
         &::after {
           background: linear-gradient(to right, $pink, $orange);
@@ -61,6 +61,13 @@
 
     &:hover a::after {
       opacity: 0;
+    }
+
+    svg {
+      fill: black;
+      display: inline-block;
+      height: 30px;
+      width: 30px;
     }
   }
 }

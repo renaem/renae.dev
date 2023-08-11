@@ -60,3 +60,16 @@ ul {
         }
     }
 }
+
+.desktop-nav {
+  position: relative;
+  height: 120px;
+  width: 380px;
+  max-width: 380px;
+  max-height: 120px;
+
+  canvas {
+    height: 120px;
+    width: 380px;
+  }
+}

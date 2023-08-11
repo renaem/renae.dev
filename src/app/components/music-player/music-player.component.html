@@ -11,6 +11,7 @@
       <span class="pre-title">Now Playing</span>
       <h3>♪ {{ recentTrack.name }}</h3>
       <i>{{ recentTrack.artist['#text'] }}</i>
+      <p class="attribute">Live Spotify data via the <a href="https://www.last.fm/api" target="_blank">LastFM API</a></p>
     </div>
 </div>
 <div *ngIf="recentTrack && !recentTrack['@attr']" class="last-played">
@@ -31,7 +32,6 @@
           {{ recentTrack.date['#text'] | date:'MMM d, h:mm a':'UTC-10' }}
         </span>
       </div>
+      <p class="attribute">Spotify data via the <a href="https://www.last.fm/api" target="_blank">LastFM API</a></p>
     </div>
 </div>
-<hr>
-<p class="attribute">Spotify data via the <a href="https://www.last.fm/api" target="_blank">LastFM API</a></p>

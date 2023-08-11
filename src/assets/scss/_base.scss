@@ -100,18 +100,21 @@ body {
 }
 
 .headline-bubble + .card {
+    margin: -40px auto 40px auto;
     box-shadow: 0px -4.664663791656494px 3.623039960861206px 0px rgba(40, 4, 92, 0.02),
         0px -12.897198677062988px 10.017241477966309px 0px rgba(40, 4, 92, 0.04),
         0px -31.051485061645508px 24.117658615112305px 0px rgba(40, 4, 92, 0.05),
         0px -103px 80px 0px rgba(40, 4, 92, 0.07);
-    margin: -40px auto 40px auto;
+
+    border-top: none;
 
     @media screen and (min-width: $screen-md) {
-        margin: -100px auto 100px auto;
+        margin: -100px auto 0 auto;
     }
 }
 
 .card {
+    border-top: 1px solid rgba(0,0,0,0.05);
     box-sizing: border-box;
     padding: 40px 20px;
     position: relative;
@@ -119,9 +122,24 @@ body {
     width: 100%;
     z-index: 20;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column-reverse;
+
+    &:not(:first-of-type) {
+        margin-top: 40px;
+    }
 
     h3 {
-        margin: 30px 0 10px 0;
+        margin: 60px 0 10px 0;
+        text-align: center;
+
+        @media screen and (min-width: $screen-md) {
+            text-align: left;
+        }
+    }
+
+    .title-grid + div h3 {
+        margin-top: 40px;
     }
 
     .grid {
@@ -133,38 +151,40 @@ body {
         }
     }
 
+    @media screen and (min-width: $screen-md) {
+        flex-direction: column;
+    }
+
     @media screen and (min-width: $screen-xl) {
         padding: 40px 170px;
+    }
+
+    &.purple {
+        background: linear-gradient(55deg, $orange, $pink, $purple, $blue, $green);
+        color: white;
     }
 }
 
 .title-grid {
     display: grid;
     grid-template-columns: 1fr;
-    column-gap: 80px;
+    column-gap: 40px;
     row-gap: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-align: center;
 
     @media screen and (min-width: $screen-md) {
-        grid-template-columns: 325px 1fr;
+        grid-template-columns: auto 1fr;
     }
 
     .title {
-        margin-top: 20px;
+        margin-top: 40px;
         display: flex;
         flex-direction: column;
 
         @media screen and (min-width: $screen-md) {
+            margin-top: 20px;
             text-align: right;
-        }
-
-        .pre-title {
-            margin: 0 auto;
-
-            @media screen and (min-width: $screen-md) {
-                margin: 0 0 0 auto;
-            }
         }
     }
 
@@ -188,23 +208,47 @@ body {
 .list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    @media screen and (min-width: $screen-md) {
+        justify-content: flex-end;
+    }
 
     li {
         margin-right: 8px;
         margin-bottom: 8px;
         font-weight: 300;
         display: inline-block;
+        font-size: 14px;
+        color: rgba(black, 0.5);
+
+        @media screen and (min-width: $screen-md) {
+            font-size: 12px;
+        }
     }
 
     &.tech {
         li {
-            font-size: 18px;
-            color: $pink;
             font-family: 'Fira Code';
             text-transform: uppercase;
+            font-size: 14px;
 
             @media screen and (min-width: $screen-md) {
                 font-size: 12px;
+            }
+        }
+    }
+    
+    &.design {
+        li {
+            font-size: 16px;
+
+            @media screen and (min-width: $screen-md) {
+                font-size: 14px;
             }
         }
     }
@@ -355,6 +399,6 @@ footer {
         bottom: 0;
         width: 100%;
         height: 8px;
-        background: linear-gradient(to right, $orange, $pink, $purple, $blue, $green);
+        background: linear-gradient(to right, $green, $blue, $purple, $pink, $orange);
     }
 }
