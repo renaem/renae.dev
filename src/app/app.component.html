@@ -16,10 +16,10 @@
                 <a class="nav-link" target="_blank" href="mailto:hey@renae.dev">CONTACT</a>
             </li>
             <li>
-                <svg-icon (click)="goToGithub()" src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
+                <svg-icon (click)="goToGithub()" src="/assets/images/icons/gh-lean.svg" class="social-icon"></svg-icon>
             </li>
             <li>
-                <svg-icon (click)="goToLinkedIn()" src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
+                <svg-icon (click)="goToLinkedIn()" src="/assets/images/icons/li-lean.svg" class="social-icon"></svg-icon>
             </li>
         </ul>
     </nav>
@@ -48,9 +48,9 @@
                 </p>
                 <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
                 <div [@collapse]="!makuExpand ? true : false" style="overflow: hidden;">
-                    <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably while consulting our primary users: industrial safety professionals.</p>
-                    <p>My work has included several large projects such as a major 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
-                    <p style="margin-bottom: 0;">I actively participate as a full stack designer / product engineer: defining technical requirements and leading front-end development on our software team; seeing every project through from conception to completion to revision and beyond.</p>
+                    <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training early on allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably while consulting our primary users: industrial safety professionals.</p>
+                    <p>My work has included several large projects such as a major software 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
+                    <p style="margin-bottom: 0;">I actively participate as a full stack designer / product engineer: defining technical requirements and leading front-end development on our software team; seeing every project through from conception to iteration to completion and beyond.</p>
                 </div>
                 <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
                 <hr/>
@@ -71,24 +71,27 @@
             </div>
         </div>
         <div>
-            <h3>Feature Development: Motion Explorer</h3>
             <div class="bubble">
-                <img src="/assets/images/motion-explorer/motion_explorer_cover.jpg" alt="Images of sketches leading up to the motion explorer.." />
+                <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Image of the MakuSmart Cloud Platform dashboard and a handful of components." />
             </div>
-            <div class="grid">
-                <div>
-                    <h3>M<span class="diacritic">a</span>kuSmart Cloud Software</h3>
-                    <div class="bubble">
-                        <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Images of the MakuSmart Cloud Platform." />
-                    </div>
+            <div class="ios-grid">
+                <div class="bubble">
+                    <img src="/assets/images/remote-worker/mobile_cover.jpg" alt="Images of the Remote Worker mobile app for iOS." />
                 </div>
                 <div>
                     <h3>Frontline Worker iOS App</h3>
-                    <div class="bubble">
-                        <img src="/assets/images/remote-worker/mobile_cover.jpg" alt="Images of the Remote Worker mobile app for iOS." />
-                    </div>
+                    <p><strong>Coming soon.</strong> My latest project is the native mobile application that allows workers to pair with their wearable device, receive MakuSmart notifications, and view their data contributions.</p>
                 </div>
             </div>
+            <div class="bubble">
+                <img src="/assets/images/motion-explorer/motion_explorer_cover.jpg" alt="Images of sketches leading up to the motion explorer." />
+            </div>
+            <p>The Motion Explorer was designed to assist safety leadership in uncovering potential hazardous motion issues within their workforce, and remains a flagship feature.</p>
+            <div [@collapse]="!motionExpand ? true : false" style="overflow: hidden;">
+                <p>Machine learning models analyze motion across each worker's day, classifying individuals who may be susceptible to sustained motion injuries and providing the contextual data for each classification.</p>
+                <p>This feature was an instant success upon launch in Fall 2021, providing daily classifications and actionable information to busy safety leaders. I'm incredibly proud to be able to say that our work here contributed to a <strong>reduction of injuries by 50% to 90%</strong>.</p>
+            </div>
+            <button class="collapsor" (click)="toggleMotionCollapse()">{{ motionExpand ? '- Less' : '+ More' }}</button>
         </div>
     </section>
     <section class="card">

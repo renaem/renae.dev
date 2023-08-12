@@ -47,7 +47,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
   onResizeWindow(event: UIEvent) {
-    console.log(event);
     const width = window.innerWidth;
     const height = window.innerHeight;
     const aspectRatio = this.getAspectRatio();
@@ -91,6 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   private controls: OrbitControls;
 
   makuExpand = false;
+  motionExpand = false;
 
   isLoaded = false;
 
@@ -255,6 +255,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   toggleMakuCollapse() {
     this.makuExpand = !this.makuExpand;
+  }
+
+  toggleMotionCollapse() {
+    this.motionExpand = !this.motionExpand;
   }
 
   goToGithub() {
