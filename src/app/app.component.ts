@@ -1,10 +1,12 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener, inject, NgZone, OnDestroy } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
+import { Subject, fromEvent } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +29,7 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
   ],
 })
 
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') private canvasRef: ElementRef;
 
   //* Stage Properties
@@ -39,39 +41,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     x: 0, 
     y: 0 
   };
-
-  @HostListener('mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
-    this.mouseCoords = this.getMousePos(event);
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResizeWindow(event: UIEvent) {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const aspectRatio = this.getAspectRatio();
-
-    if(window.innerWidth > 768) {
-      this.camera.zoom = 1.1;
-      this.scene.children[1].position.x = 1.55;
-      this.scene.children[1].position.z = 1.55;
-      this.scene.children[1].position.y = 0;
-      this.canvas.width = width * aspectRatio;
-      this.canvas.height = height * aspectRatio;
-      this.canvas.style.width = `${width}px`;
-      this.canvas.style.height = `${height}px`;
-      this.renderer.setSize(width, height);
-      this.camera.left = - this.fieldOfView * aspectRatio;
-      this.camera.right = this.fieldOfView * aspectRatio;
-    } else {
-      this.camera.zoom = 0.6;
-      this.scene.children[1].position.x = 0;
-      this.scene.children[1].position.z = 0;
-      this.scene.children[1].position.y = 0.75;
-    }
-
-    this.camera.updateProjectionMatrix();
-  }
 
   //? Helper Properties (Private Properties);
   private camera!: THREE.PerspectiveCamera;
@@ -93,6 +62,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   motionExpand = false;
 
   isLoaded = false;
+
+  private readonly ngZone = inject(NgZone);
+  private readonly destroy$$ = new Subject<void>();
 
   /**
    * Create the scene
@@ -220,7 +192,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.controls.enablePan = false;
     this.controls.enableRotate = false;
 
-    console.log(window.innerWidth)
     if (window.innerWidth < 768) {
       this.mouseCoords.x = 1200;
     }
@@ -238,10 +209,47 @@ export class AppComponent implements OnInit, AfterViewInit {
     }());
   }
 
-  constructor() { }
+  constructor() {
+    this.ngZone.runOutsideAngular(() => {
+      fromEvent(window, 'resize')
+          .pipe(takeUntil(this.destroy$$))
+          .subscribe((e: MouseEvent) => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const aspectRatio = this.getAspectRatio();
 
-  ngOnInit(): void {
+            if(window.innerWidth > 768) {
+              this.camera.zoom = 1.1;
+              this.scene.children[1].position.x = 1.55;
+              this.scene.children[1].position.z = 1.55;
+              this.scene.children[1].position.y = 0;
+              this.canvas.width = width * aspectRatio;
+              this.canvas.height = height * aspectRatio;
+              this.canvas.style.width = `${width}px`;
+              this.canvas.style.height = `${height}px`;
+              this.renderer.setSize(width, height);
+              this.camera.left = - this.fieldOfView * aspectRatio;
+              this.camera.right = this.fieldOfView * aspectRatio;
+            } else {
+              this.camera.zoom = 0.6;
+              this.scene.children[1].position.x = 0;
+              this.scene.children[1].position.z = 0;
+              this.scene.children[1].position.y = 0.75;
+            }
 
+            this.camera.updateProjectionMatrix();
+        });
+
+      fromEvent(window, 'mousemove')
+        .pipe(takeUntil(this.destroy$$))
+        .subscribe((e: MouseEvent) => {
+          this.mouseCoords = this.getMousePos(e);
+      });
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$$.next();
   }
 
   ngAfterViewInit() {

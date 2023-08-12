@@ -10,7 +10,7 @@
     <nav class="mobile-nav">
         <ul>
             <li>
-                <a class="nav-link" href="/resume">RÉSUMÉ</a>
+                <a class="nav-link" onClick="alert('tee hee, still working on this')">RÉSUMÉ</a>
             </li>
             <li>
                 <a class="nav-link" target="_blank" href="mailto:hey@renae.dev">CONTACT</a>
@@ -78,7 +78,7 @@
                 <div class="bubble">
                     <img src="/assets/images/remote-worker/mobile_cover.jpg" alt="Images of the Remote Worker mobile app for iOS." />
                 </div>
-                <div>
+                <div class="coming-soon">
                     <h3>Frontline Worker iOS App</h3>
                     <p><strong>Coming soon.</strong> My latest project is the native mobile application that allows workers to pair with their wearable device, receive MakuSmart notifications, and view their data contributions.</p>
                 </div>
@@ -86,12 +86,14 @@
             <div class="bubble">
                 <img src="/assets/images/motion-explorer/motion_explorer_cover.jpg" alt="Images of sketches leading up to the motion explorer." />
             </div>
-            <p>The Motion Explorer was designed to assist safety leadership in uncovering potential hazardous motion issues within their workforce, and remains a flagship feature.</p>
-            <div [@collapse]="!motionExpand ? true : false" style="overflow: hidden;">
-                <p>Machine learning models analyze motion across each worker's day, classifying individuals who may be susceptible to sustained motion injuries and providing the contextual data for each classification.</p>
-                <p>This feature was an instant success upon launch in Fall 2021, providing daily classifications and actionable information to busy safety leaders. I'm incredibly proud to be able to say that our work here contributed to a <strong>reduction of injuries by 50% to 90%</strong>.</p>
+            <div class="container">
+                <p>The Motion Explorer was designed to assist safety leadership in uncovering potential hazardous motion issues within their workforce, and remains a flagship feature.</p>
+                <div [@collapse]="!motionExpand ? true : false" style="overflow: hidden;">
+                    <p>Machine learning models analyze motion across each worker's day, classifying individuals who may be susceptible to sustained motion injuries and providing the contextual data for each classification.</p>
+                    <p>This feature was an instant success upon launch in Fall 2021, providing daily classifications and actionable information to busy safety leaders. I'm incredibly proud to be able to say that our work here contributed to a <strong>reduction of injuries by 50% to 90%</strong>.</p>
+                </div>
+                <button class="collapsor" (click)="toggleMotionCollapse()">{{ motionExpand ? '- Less' : '+ More' }}</button>
             </div>
-            <button class="collapsor" (click)="toggleMotionCollapse()">{{ motionExpand ? '- Less' : '+ More' }}</button>
         </div>
     </section>
     <section class="card">
@@ -128,7 +130,7 @@
                 <h2>Website & Brand Collateral</h2>
             </div>
             <div class="description">
-                <p>One of my first projects after I joined We Write Code was a brand overhaul for the Des Moines-based digital software agency, beginning with a new website. I developed the website strategy & content alongside leadership, ultimately designing & implementing the new site as a custom WordPress theme. The website won Gold in the Online/Interactive category of the 2020 American Advertising Awards of Iowa. Also shown: brand collateral pieces.</p>
+                <p>One of my first projects after I joined We Write Code was a brand refresh for the Des Moines-based digital software agency, beginning with a new website. I developed the website strategy & content alongside leadership, ultimately designing & implementing the new site as a custom WordPress theme. The website won Gold in the Online/Interactive category of the 2020 American Advertising Awards of Iowa. Also shown are miscellaneous collateral pieces.</p>
                 <hr/>   
                 <ul class="list design">
                     <li>Figma</li>
@@ -139,7 +141,7 @@
                     <li>HTML</li>
                     <li>CSS/SCSS</li>
                     <li>JavaScript</li>
-                    <li>WordPress (Bedrock, Sage)</li>
+                    <li>WordPress/Bedrock/Sage</li>
                     <li>THREE.js</li>
                     <li>Anime.js</li>
                 </ul>    

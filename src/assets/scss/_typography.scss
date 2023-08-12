@@ -18,7 +18,7 @@ h1 {
         -webkit-text-fill-color: transparent;
     }
 
-    @media screen and (min-width: $screen-xl) {
+    @media screen and (min-width: $screen-xxl) {
         font-size: 48px;
         line-height: 48px;
     }
@@ -106,7 +106,7 @@ hr {
     @media screen and (min-width: $screen-md) {
         right: 60px;
         left: auto;
-        top: 250px;
+        top: 200px;
         bottom: auto;
         max-width: 400px;
         background: transparent;
@@ -118,12 +118,16 @@ hr {
     }
 
     @media screen and (min-width: $screen-lg) {
-        top: 300px;
         max-width: 500px;
+        top: 250px;
     }
 
     @media screen and (min-width: $screen-xl) {
         top: 340px;
+        right: 170px;
+    }
+
+    @media screen and (min-width: $screen-xxl) {
         max-width: 650px;
     }
 }

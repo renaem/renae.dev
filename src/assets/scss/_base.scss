@@ -62,6 +62,10 @@ body {
         width: 200px;
         text-align: left;
     }
+
+    @media screen and (min-width: $screen-xl) {
+        left: 170px;
+    }
 }
 
 .nav {
@@ -73,6 +77,10 @@ body {
         z-index: 50;
         top: 0;
         right: 0;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+        right: 120px;
     }
 }
 
@@ -167,6 +175,19 @@ body {
                 margin: 0 40px 40px 40px;
             }
         }
+
+        .coming-soon {
+            display: none;
+
+            @media screen and (min-width: $screen-md) {
+                display: block;
+            }
+
+            @media screen and (min-width: $screen-xl) {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
     }
 
     @media screen and (min-width: $screen-md) {
@@ -184,6 +205,13 @@ body {
     }
 }
 
+.container {
+    @media screen and (min-width: $screen-xl) {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+}
+
 .title-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -194,6 +222,11 @@ body {
 
     @media screen and (min-width: $screen-md) {
         grid-template-columns: auto 1fr;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+        max-width: 1100px;
+        margin: 0 auto 20px auto;
     }
 
     .title {
