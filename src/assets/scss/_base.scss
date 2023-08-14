@@ -441,6 +441,15 @@ footer {
 
         p {
             text-align: left;
+
+            &:first-child {
+                margin-right: 20px;
+            }
+
+            &:last-child {
+                text-align: right;
+                margin-left: 20px;
+            }
         }
     }
 

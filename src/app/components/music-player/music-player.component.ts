@@ -23,7 +23,7 @@ export class MusicPlayerComponent implements OnInit {
   }
 
   getStreamingData() {
-    const mostRecentApiUrl = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + this.userName + '&api_key=' + this.apiKey + '&limit=1&format=json';
+    const mostRecentApiUrl = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + this.userName + '&api_key=' + this.apiKey + '&limit=1&format=json';
     this.http.get(mostRecentApiUrl).subscribe(
       (data) => {
         // Handle the API response data here
