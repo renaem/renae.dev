@@ -7,13 +7,15 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
 import {AngularSvgIconModule} from 'angular-svg-icon';
+import { LazyImgDirective } from './directives/lazy-img.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    MusicPlayerComponent
+    MusicPlayerComponent,
+    LazyImgDirective
   ],
   imports: [
     BrowserModule,
