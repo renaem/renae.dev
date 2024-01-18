@@ -73,8 +73,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
    * @memberof AppComponent
    */
   private createScene() {
-    //* Scene
+    // Scene
     this.scene = new THREE.Scene();
+
+    // Loader for 3D object using GLTF with Draco compression
+    this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    this.dracoLoader.preload();
+    this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
     // Env
     const hdrUrl = 'assets/images/gradient.hdr'
@@ -85,51 +90,47 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       
       texture.dispose()
       gen.dispose()
-    })
 
-    this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-    this.dracoLoader.preload();
-    this.gltfLoader.setDRACOLoader(this.dracoLoader);
-
-    this.gltfLoader.load('/assets/renae_island/renae_island_baking.gltf', (gltf) => {
-      gltf.scene.traverse( function( node ) {
-        if (node.isGroup) {
-          node.children.forEach(child => {
-            if (child.isMesh || child.isObject3D) {
-              child.castShadow = true;
+      this.gltfLoader.load('/assets/renae_island/renae_island_baking.gltf', (gltf) => {
+        gltf.scene.traverse( function( node ) {
+          if (node.isGroup) {
+            node.children.forEach(child => {
+              if (child.isMesh || child.isObject3D) {
+                child.castShadow = true;
+              }
+            })
+          } else if(node.isMesh || node.isObject3D) {
+            if(node.name === 'Floor') {
+              node.receiveShadow = true;
+            } else {
+              node.castShadow = true;
             }
-          })
-        } else if(node.isMesh || node.isObject3D) {
-          if(node.name === 'Floor') {
-            node.receiveShadow = true;
-          } else {
-            node.castShadow = true;
           }
+        } );
+  
+        // Offset for desktop+ sizes
+        if(window.innerWidth > 768) {
+          gltf.scene.position.x = 1.55;
+          gltf.scene.position.z = 1.55;
+        } else {
+          gltf.scene.position.y = 0.75;
         }
-      } );
-
-      // Offset for desktop+ sizes
-      if(window.innerWidth > 768) {
-        gltf.scene.position.x = 1.55;
-        gltf.scene.position.z = 1.55;
-      } else {
-        gltf.scene.position.y = 0.75;
-      }
-
-      this.islandObj = gltf.scene;
-
-      this.scene.add(this.islandObj);
-
-      if(window.innerWidth > 768) {
-        this.camera.zoom = 1.1;
-      } else {
-        this.camera.zoom = 0.6;
-      }
-
-      this.camera.updateProjectionMatrix();
-
-      this.isLoaded = true;
-    });
+  
+        this.islandObj = gltf.scene;
+  
+        this.scene.add(this.islandObj);
+  
+        if(window.innerWidth > 768) {
+          this.camera.zoom = 1.1;
+        } else {
+          this.camera.zoom = 0.6;
+        }
+  
+        this.camera.updateProjectionMatrix();
+  
+        this.isLoaded = true;
+      });
+    })
 
     //Create a DirectionalLight and turn on shadows for the light
     const directionLight: THREE.DirectionalLight = new THREE.DirectionalLight( 0xFFFFFF, 3);

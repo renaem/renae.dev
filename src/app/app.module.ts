@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MusicPlayerComponent } from './components/music-player/music-player.component';
 import {AngularSvgIconModule} from 'angular-svg-icon';
 import { LazyImgDirective } from './directives/lazy-img.directive';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { LazyImgDirective } from './directives/lazy-img.directive';
     AppComponent,
     NavMenuComponent,
     MusicPlayerComponent,
+    LoaderComponent,
     LazyImgDirective
   ],
   imports: [

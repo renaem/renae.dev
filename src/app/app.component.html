@@ -1,6 +1,5 @@
-<div *ngIf="!isLoaded" style="z-index: 100; position: absolute; top: 0; left: 0; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background-color: white;">
-    <img width="100" height="100" src="/assets/loading-r.gif" />
-</div>
+<app-loader *ngIf="!isLoaded">
+</app-loader>
 <canvas #canvas id="canvas"></canvas>
 <main [hidden]="!isLoaded">
     <div class="logo">
@@ -24,11 +23,11 @@
         </ul>
     </nav>
     <div class="headline-bubble">
-        <button class="shimmer-button" (click)="goToGithub()">
+        <button class="shimmer-button" (click)="goToGithub()" aria-label="My Github Profile">
             <svg-icon src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
             <svg-icon src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
         </button>
-        <button class="shimmer-button" (click)="goToLinkedIn()">
+        <button class="shimmer-button" (click)="goToLinkedIn()" aria-label="My LinkedIn Profile">
             <svg-icon src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
             <svg-icon src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
         </button>
@@ -47,7 +46,7 @@
                     As Lead Product Designer for <a href="https://makusafe.com" target="_blank">M<span class="diacritic">a</span>kuSafe</a>, I design software for a unique problem space: hazard detection in industrial workplaces.
                 </p>
                 <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
-                <div [@collapse]="!makuExpand ? true : false" style="overflow: hidden;">
+                <div [@collapse]="!makuExpand ? true : false" class="overflow-hidden">
                     <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training early on allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably while consulting our primary users: industrial safety professionals.</p>
                     <p>My work has included several large projects such as a major software 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
                     <p style="margin-bottom: 0;">I actively participate as a full stack designer / product engineer: defining technical requirements and leading front-end development on our software team; seeing every project through from conception to iteration to completion and beyond.</p>
@@ -72,7 +71,7 @@
         </div>
         <div>
             <div class="bubble">
-                <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Image of the MakuSmart Cloud Platform dashboard and a handful of components." />
+                <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Image of the MākuSmart Cloud Platform dashboard and a handful of components." />
             </div>
             <div class="ios-grid">
                 <div class="bubble">
@@ -80,7 +79,7 @@
                 </div>
                 <div class="coming-soon">
                     <h3>Frontline Worker iOS App</h3>
-                    <p><strong>Coming soon.</strong> My latest project is the native mobile application that allows workers to pair with their wearable device, receive MakuSmart notifications, and view their data contributions.</p>
+                    <p><strong>Coming soon.</strong> My latest project is the native mobile application that allows workers to pair with their wearable device, receive MākuSmart notifications, and view their data contributions.</p>
                 </div>
             </div>
             <div class="bubble">
@@ -88,7 +87,7 @@
             </div>
             <div class="container">
                 <p>The Motion Explorer was designed to assist safety leadership in uncovering potential hazardous motion issues within their workforce, and remains a flagship feature.</p>
-                <div [@collapse]="!motionExpand ? true : false" style="overflow: hidden;">
+                <div [@collapse]="!motionExpand ? true : false" class="overflow-hidden">
                     <p>Machine learning models analyze motion across each worker's day, classifying individuals who may be susceptible to sustained motion injuries and providing the contextual data for each classification.</p>
                     <p>This feature was an instant success upon launch in Fall 2021, providing daily classifications and actionable information to busy safety leaders. I'm incredibly proud to be able to say that our work here contributed to a <strong>reduction of injuries by 50% to 90%</strong>.</p>
                 </div>
