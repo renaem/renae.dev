@@ -11,7 +11,6 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   animations: [
     trigger('collapse', [
       state(
