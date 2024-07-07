@@ -10,7 +10,7 @@ h1 {
     font-weight: 500;
 
     @media screen and (min-width: $screen-md) {
-        font-size: 40px;
+        font-size: clamp(2.5rem, 4vw, 2.9rem); 
         line-height: 40px;
         text-shadow: none;
         background: -webkit-linear-gradient(right bottom, $pink, $orange );
@@ -19,8 +19,8 @@ h1 {
     }
 
     @media screen and (min-width: $screen-xxl) {
-        font-size: 48px;
         line-height: 48px;
+        font-size: clamp(3rem, 4vw, 3.5rem); 
     }
 }
 
@@ -89,27 +89,44 @@ hr {
     margin: 20px 0;
 }
 
-.headline-bubble {
+.headline-bubble-container {
     box-sizing: border-box;
     position: absolute;
+    height: 720px;
     width: calc(100% - 40px);
-    left: 20px;
-    bottom: 0;
-    text-align: center;
-    z-index: 1;
     top: 480px;
-    
+    left: 20px;
+
+    @media screen and (min-width: $screen-md) {
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 120px;
+        height: 600px;
+    }
+
+    @media screen and (min-width: $screen-lg) {
+        height: 680px;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+        height: calc(100vh - 120px);
+    }
+}
+
+.headline-bubble {
+    text-align: center;
+
     .shimmer-button {
         display: none;
     }
 
     @media screen and (min-width: $screen-md) {
-        right: 60px;
-        left: auto;
-        top: 200px;
-        bottom: auto;
         max-width: 400px;
-        background: transparent;
+        margin-right: 50px;
         text-align: right;
 
         .shimmer-button {
@@ -119,16 +136,14 @@ hr {
 
     @media screen and (min-width: $screen-lg) {
         max-width: 500px;
-        top: 250px;
     }
 
     @media screen and (min-width: $screen-xl) {
-        top: 340px;
-        right: 170px;
+        margin-right: 160px;
     }
 
     @media screen and (min-width: $screen-xxl) {
-        max-width: 650px;
+        max-width: 590px;
     }
 }
 

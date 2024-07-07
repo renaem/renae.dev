@@ -1,191 +1,194 @@
 <app-loader *ngIf="!isLoaded">
 </app-loader>
-<canvas #canvas id="canvas"></canvas>
-<main [hidden]="!isLoaded">
-    <div class="logo">
-        Renae Ruschill
-    </div>
-    <app-nav-menu *ngIf="isLoaded" class="nav"></app-nav-menu>
-    <nav class="mobile-nav">
-        <ul>
-            <li>
-                <a class="nav-link" target="_blank" href="/assets/renae_ruschill_resume.pdf">RÉSUMÉ</a>
-            </li>
-            <li>
-                <a class="nav-link" target="_blank" href="mailto:hey@renae.dev">CONTACT</a>
-            </li>
-            <li>
-                <svg-icon (click)="goToGithub()" src="/assets/images/icons/gh-lean.svg" class="social-icon"></svg-icon>
-            </li>
-            <li>
-                <svg-icon (click)="goToLinkedIn()" src="/assets/images/icons/li-lean.svg" class="social-icon"></svg-icon>
-            </li>
-        </ul>
-    </nav>
-    <div class="headline-bubble">
-        <button class="shimmer-button" (click)="goToGithub()" aria-label="My Github Profile">
-            <svg-icon src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
-            <svg-icon src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
-        </button>
-        <button class="shimmer-button" (click)="goToLinkedIn()" aria-label="My LinkedIn Profile">
-            <svg-icon src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
-            <svg-icon src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
-        </button>
-        <h1 class="headline">
-            Traversing the strange and wonderful borderlands between design and engineering since 2016.
-        </h1>
-    </div>
-    <section class="card">
-        <div class="title-grid">
-            <div class="title">
-                <span class="pre-title">WEARABLE SAFETY TECH</span>
-                <h2>Lead Product Designer</h2>
-            </div>
-            <div class="description">
-                <p>
-                    As Lead Product Designer for <a href="https://makusafe.com" target="_blank">M<span class="diacritic">a</span>kuSafe</a>, I design software for a unique problem space: hazard detection in industrial workplaces.
-                </p>
-                <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
-                <div [@collapse]="!makuExpand ? true : false" class="overflow-hidden">
-                    <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training early on allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably while consulting our primary users: industrial safety professionals.</p>
-                    <p>My work has included several large projects such as a major software 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
-                    <p style="margin-bottom: 0;">I actively participate as a full stack designer / product engineer: defining technical requirements and leading front-end development on our software team; seeing every project through from conception to iteration to completion and beyond.</p>
-                </div>
-                <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
-                <hr/>
-                <ul class="list design">
-                    <li>Figma</li>
-                    <li>Illustrator</li>
-                    <li>Photoshop</li>
-                    <li>After Effects</li>
-                </ul>
-                <ul class="list tech">
-                    <li>HTML</li>
-                    <li>CSS/SCSS</li>
-                    <li>Typescript</li>
-                    <li>Angular</li>
-                    <li>Chart.JS</li>
-                    <li>SwiftUI</li>
-                </ul>
+<main>
+    <canvas #canvas id="canvas"></canvas>
+    <ng-container *ngIf="isLoaded">
+        <div class="logo">
+            Renae Ruschill
+        </div>
+        <app-nav-menu *ngIf="isLoaded" class="nav"></app-nav-menu>
+        <nav class="mobile-nav">
+            <ul>
+                <li>
+                    <a class="nav-link" target="_blank" href="/assets/renae_ruschill_resume.pdf">RÉSUMÉ</a>
+                </li>
+                <li>
+                    <a class="nav-link" target="_blank" href="mailto:hey@renae.dev">CONTACT</a>
+                </li>
+                <li>
+                    <svg-icon (click)="goToGithub()" src="/assets/images/icons/gh-lean.svg" class="social-icon"></svg-icon>
+                </li>
+                <li>
+                    <svg-icon (click)="goToLinkedIn()" src="/assets/images/icons/li-lean.svg" class="social-icon"></svg-icon>
+                </li>
+            </ul>
+        </nav>
+        <div class="headline-bubble-container">
+            <div class="headline-bubble">
+                <button class="shimmer-button" (click)="goToGithub()" aria-label="My Github Profile">
+                    <svg-icon src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
+                    <svg-icon src="/assets/images/icons/gh.svg" class="social-icon"></svg-icon>
+                </button>
+                <button class="shimmer-button" (click)="goToLinkedIn()" aria-label="My LinkedIn Profile">
+                    <svg-icon src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
+                    <svg-icon src="/assets/images/icons/li.svg" class="social-icon"></svg-icon>
+                </button>
+                <h1 class="headline">
+                    Traversing the strange and wonderful borderlands between design and engineering since 2016.
+                </h1>
             </div>
         </div>
-        <div>
-            <div class="bubble">
-                <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Image of the MākuSmart Cloud Platform dashboard and a handful of components." />
+        <section class="card">
+            <div class="title-grid">
+                <div class="title">
+                    <span class="pre-title">WEARABLE SAFETY TECH</span>
+                    <h2>Lead Product Designer</h2>
+                </div>
+                <div class="description">
+                    <p>
+                        As Lead Product Designer for <a href="https://makusafe.com" target="_blank">M<span class="diacritic">a</span>kuSafe</a>, I design software for a unique problem space: hazard detection in industrial workplaces.
+                    </p>
+                    <p>M<span class="diacritic">a</span>kuSafe provides an innovative hardware ecosystem consisting of base station kiosks, wearable devices, and of course—M<span class="diacritic">a</span>kuSmart, the supporting cloud data & analytics platform.</p>
+                    <div [@collapse]="!makuExpand ? true : false" class="overflow-hidden">
+                        <p style="margin-top: 0;">Taking Certified Occupational Safety Specialist (COSS) training early on allowed me to gain new personal understanding of the concerns of a safety professional. This training not only fundamentally influenced my design perspective, but also supported me to speak knowledgeably while consulting our primary users: industrial safety professionals.</p>
+                        <p>My work has included several large projects such as a major software 2.0 redesign, design system implementation, new feature development, feature redesigns, mobile app design, reporting, data visualization, brand materials, and more.</p>
+                        <p style="margin-bottom: 0;">I actively participate as a full stack designer / product engineer: defining technical requirements and leading front-end development on our software team; seeing every project through from conception to iteration to completion and beyond.</p>
+                    </div>
+                    <button class="collapsor" (click)="toggleMakuCollapse()">{{ makuExpand ? '- Less' : '+ More' }}</button>
+                    <hr/>
+                    <ul class="list design">
+                        <li>Figma</li>
+                        <li>Illustrator</li>
+                        <li>Photoshop</li>
+                        <li>After Effects</li>
+                    </ul>
+                    <ul class="list tech">
+                        <li>HTML</li>
+                        <li>CSS/SCSS</li>
+                        <li>Typescript</li>
+                        <li>Angular</li>
+                        <li>Chart.JS</li>
+                        <li>SwiftUI</li>
+                    </ul>
+                </div>
             </div>
-            <div class="ios-grid">
+            <div>
                 <div class="bubble">
-                    <img src="/assets/images/remote-worker/mobile_cover.jpg" alt="Images of the Remote Worker mobile app for iOS." />
+                    <img src="/assets/images/makusmart/makusmart_cover.jpg" alt="Image of the MākuSmart Cloud Platform dashboard and a handful of components." />
                 </div>
-                <div class="coming-soon">
-                    <h3>Frontline Worker iOS App</h3>
-                    <p><strong>Coming soon.</strong> My latest project is the native mobile application that allows workers to pair with their wearable device, receive MākuSmart notifications, and view their data contributions.</p>
+                <div class="ios-grid">
+                    <div class="bubble">
+                        <img src="/assets/images/remote-worker/mobile_cover.jpg" alt="Images of the Remote Worker mobile app for iOS." />
+                    </div>
+                    <div class="coming-soon">
+                        <h3>Frontline Worker iOS App</h3>
+                        <p><strong>Coming soon.</strong> My latest project is the native mobile application that allows workers to pair with their wearable device, receive MākuSmart notifications, and view their data contributions.</p>
+                    </div>
+                </div>
+                <div class="bubble">
+                    <img src="/assets/images/motion-explorer/motion_explorer_cover.jpg" alt="Images of sketches leading up to the motion explorer." />
+                </div>
+                <div class="container">
+                    <p>The Motion Explorer was designed to assist safety leadership in uncovering potential hazardous motion issues within their workforce, and remains a flagship feature.</p>
+                    <div [@collapse]="!motionExpand ? true : false" class="overflow-hidden">
+                        <p>Machine learning models analyze motion across each worker's day, classifying individuals who may be susceptible to sustained motion injuries and providing the contextual data for each classification.</p>
+                        <p>This feature was an instant success upon launch in Fall 2021, providing daily classifications and actionable information to busy safety leaders. I'm incredibly proud to be able to say that our work here contributed to a <strong>reduction of injuries by 50% to 90%</strong>.</p>
+                    </div>
+                    <button class="collapsor" (click)="toggleMotionCollapse()">{{ motionExpand ? '- Less' : '+ More' }}</button>
+                </div>
+            </div>
+        </section>
+        <section class="card">
+            <div class="title-grid">
+                <div class="title">
+                    <span class="pre-title">UBER, BUT FOR YOUR STYLIST</span>
+                    <h2>Brand & Product Designer</h2>
+                </div>
+                <div class="description">
+                    <p>
+                        Born out of the pandemic, Updo is a Minneapolis-based startup that provides a platform connecting in-home salon service providers with local clientele. I executed the logotype, brand direction, teaser website, social media, and initial product design for this fashion-forward startup. The brand won Best in Category for Identity Mark at the 2021 Art Director’s Association of Iowa Awards and received an additional Award of Excellence for the brand system.
+                    </p>
+                    <hr/>   
+                    <ul class="list design">
+                        <li>Figma</li>
+                        <li>Illustrator</li>
+                        <li>Cinema4D</li>
+                    </ul>
+                    <ul class="list tech">
+                        <li>HTML</li>
+                        <li>CSS/SCSS</li>
+                        <li>JavaScript</li>
+                    </ul>      
                 </div>
             </div>
             <div class="bubble">
-                <img src="/assets/images/motion-explorer/motion_explorer_cover.jpg" alt="Images of sketches leading up to the motion explorer." />
+                <img src="/assets/images/updo_cover.jpg" alt="Updo Brand System Imagery" />
             </div>
-            <div class="container">
-                <p>The Motion Explorer was designed to assist safety leadership in uncovering potential hazardous motion issues within their workforce, and remains a flagship feature.</p>
-                <div [@collapse]="!motionExpand ? true : false" class="overflow-hidden">
-                    <p>Machine learning models analyze motion across each worker's day, classifying individuals who may be susceptible to sustained motion injuries and providing the contextual data for each classification.</p>
-                    <p>This feature was an instant success upon launch in Fall 2021, providing daily classifications and actionable information to busy safety leaders. I'm incredibly proud to be able to say that our work here contributed to a <strong>reduction of injuries by 50% to 90%</strong>.</p>
+        </section>
+        <section class="card">
+            <div class="title-grid">
+                <div class="title">
+                    <span class="pre-title">BESPOKE SOFTWARE CONSULTANCY</span>
+                    <h2>Website & Brand Collateral</h2>
                 </div>
-                <button class="collapsor" (click)="toggleMotionCollapse()">{{ motionExpand ? '- Less' : '+ More' }}</button>
+                <div class="description">
+                    <p>One of my first projects after I joined We Write Code was a brand refresh for the Des Moines-based digital software agency, beginning with a new website. I developed the website strategy & content alongside leadership, ultimately designing & implementing the new site as a custom WordPress theme. The website won Gold in the Online/Interactive category of the 2020 American Advertising Awards of Iowa. Also shown are miscellaneous collateral pieces.</p>
+                    <hr/>   
+                    <ul class="list design">
+                        <li>Figma</li>
+                        <li>Illustrator</li>
+                        <li>Cinema4D</li>
+                    </ul>
+                    <ul class="list tech">
+                        <li>HTML</li>
+                        <li>CSS/SCSS</li>
+                        <li>JavaScript</li>
+                        <li>WordPress/Bedrock/Sage</li>
+                        <li>THREE.js</li>
+                        <li>Anime.js</li>
+                    </ul>    
+                </div>
             </div>
-        </div>
-    </section>
-    <section class="card">
-        <div class="title-grid">
-            <div class="title">
-                <span class="pre-title">UBER, BUT FOR YOUR STYLIST</span>
-                <h2>Brand & Product Designer</h2>
+            <div class="bubble">
+                <img src="/assets/images/wwc_cover.jpg" alt="We Write Code Brand Collateral Imagery" />
+                <img src="/assets/images/wwc_site.gif" alt="We Write Code Website Gif" class="wwc-gif" />
             </div>
-            <div class="description">
-                <p>
-                    Born out of the pandemic, Updo is a Minneapolis-based startup that provides a platform connecting in-home salon service providers with local clientele. I executed the logotype, brand direction, teaser website, social media, and initial product design for this fashion-forward startup. The brand won Best in Category for Identity Mark at the 2021 Art Director’s Association of Iowa Awards and received an additional Award of Excellence for the brand system.
-                </p>
-                <hr/>   
-                <ul class="list design">
-                    <li>Figma</li>
-                    <li>Illustrator</li>
-                    <li>Cinema4D</li>
-                </ul>
-                <ul class="list tech">
-                    <li>HTML</li>
-                    <li>CSS/SCSS</li>
-                    <li>JavaScript</li>
-                </ul>      
+        </section>
+        <section class="card">
+            <div class="title-grid">
+                <div class="title">
+                    <span class="pre-title">ROLL FOR INITIATIVE</span>
+                    <h2>Kickstarter & Product Design</h2>
+                </div>
+                <div class="description">
+                    <p>A successful Kickstarter project involving a redesign of a Dungeons and Dragons (DnD) platform called GMBinder. The site features “homebrew” content: material written by users from all over the world, intended to be used as the setting and story for tabletop role playing games—the most popular of which being DnD. These documents are authored using Markdown and processed on-the-fly into beautifully formatted documents. I not only revamped the UI, but created custom illustrations and textures for a new document theme and other promotional Kickstarter materials.</p>
+                    <hr/>   
+                    <ul class="list design">
+                        <li>Figma</li>
+                        <li>Photoshop</li>
+                        <li>Procreate</li>
+                    </ul>
+                    <ul class="list tech">
+                        <li>HTML</li>
+                        <li>CSS/SCSS</li>
+                        <li>TypeScript</li>
+                        <li>Angular</li>
+                    </ul>  
+                </div>
             </div>
-        </div>
-        <div class="bubble">
-            <img src="/assets/images/updo_cover.jpg" alt="Updo Brand System Imagery" />
-        </div>
-    </section>
-    <section class="card">
-        <div class="title-grid">
-            <div class="title">
-                <span class="pre-title">BESPOKE SOFTWARE CONSULTANCY</span>
-                <h2>Website & Brand Collateral</h2>
+            <div class="bubble">
+                <img src="/assets/images/gmb_cover.jpg" alt="GM Binder Kickstarter Imagery" />
             </div>
-            <div class="description">
-                <p>One of my first projects after I joined We Write Code was a brand refresh for the Des Moines-based digital software agency, beginning with a new website. I developed the website strategy & content alongside leadership, ultimately designing & implementing the new site as a custom WordPress theme. The website won Gold in the Online/Interactive category of the 2020 American Advertising Awards of Iowa. Also shown are miscellaneous collateral pieces.</p>
-                <hr/>   
-                <ul class="list design">
-                    <li>Figma</li>
-                    <li>Illustrator</li>
-                    <li>Cinema4D</li>
-                </ul>
-                <ul class="list tech">
-                    <li>HTML</li>
-                    <li>CSS/SCSS</li>
-                    <li>JavaScript</li>
-                    <li>WordPress/Bedrock/Sage</li>
-                    <li>THREE.js</li>
-                    <li>Anime.js</li>
-                </ul>    
-            </div>
-        </div>
-        <div class="bubble">
-            <img src="/assets/images/wwc_cover.jpg" alt="We Write Code Brand Collateral Imagery" />
-            <img src="/assets/images/wwc_site.gif" alt="We Write Code Website Gif" class="wwc-gif" />
-        </div>
-    </section>
-    <section class="card">
-        <div class="title-grid">
-            <div class="title">
-                <span class="pre-title">ROLL FOR INITIATIVE</span>
-                <h2>Kickstarter & Product Design</h2>
-            </div>
-            <div class="description">
-                <p>A successful Kickstarter project involving a redesign of a Dungeons and Dragons (DnD) platform called GMBinder. The site features “homebrew” content: material written by users from all over the world, intended to be used as the setting and story for tabletop role playing games—the most popular of which being DnD. These documents are authored using Markdown and processed on-the-fly into beautifully formatted documents. I not only revamped the UI, but created custom illustrations and textures for a new document theme and other promotional Kickstarter materials.</p>
-                <hr/>   
-                <ul class="list design">
-                    <li>Figma</li>
-                    <li>Photoshop</li>
-                    <li>Procreate</li>
-                </ul>
-                <ul class="list tech">
-                    <li>HTML</li>
-                    <li>CSS/SCSS</li>
-                    <li>TypeScript</li>
-                    <li>Angular</li>
-                </ul>  
-            </div>
-        </div>
-        <div class="bubble">
-            <img src="/assets/images/gmb_cover.jpg" alt="GM Binder Kickstarter Imagery" />
-        </div>
-    </section>
-    <section class="card plant-border">
-        <img src="/assets/images/plant_background.png" alt="Decorative plant border" />
-    </section>
-    <section class="card purple">
-        <app-music-player>
-        </app-music-player>
-        <footer>
-            <p>*^•^/\^•^* Like the Sagrada Familia, this site construction never ends</p>
-            <p>Thanks for stopping, come again soon 🌞</p>
-        </footer>
-    </section>
+        </section>
+        <section class="card plant-border">
+            <img src="/assets/images/plant_background.png" alt="Decorative plant border" />
+        </section>
+        <section class="card purple">
+            <app-music-player>
+            </app-music-player>
+            <footer>
+                <p>Thanks for stopping, come again soon 🌞</p>
+            </footer>
+        </section>
+    </ng-container>
 </main>
