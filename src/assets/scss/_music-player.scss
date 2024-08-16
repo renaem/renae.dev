@@ -137,6 +137,20 @@
 
   a {
     color: white;
+
+    &::after {
+      background-color: $green;
+      height: 6px;
+    }
+
+    &:hover {
+      color: $yellow;
+
+      &::after {
+        height: 1px;
+        background-color: $yellow;
+      }
+    }
   }
 
   @media screen and (min-width: $screen-md) {
