@@ -29,9 +29,6 @@ h2 {
     line-height: 40px;
     margin-bottom: 0;
     display: inline-block;
-    background: -webkit-linear-gradient(right bottom, $pink, $orange );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     padding: 10px 0;
 }
 
@@ -62,8 +59,10 @@ p {
 }
 
 a {
-    color: $blue;
+    color: black;
     transition: 0.3s all;
+    text-decoration: none;
+    position: relative;
 
     &:hover {
         color: $purple;
@@ -71,10 +70,28 @@ a {
         .diacritic::after {
             background-color: $purple
         }
+
+        &::after {
+            background-color: $purple;
+            height: 2px;
+            bottom: 0px;
+        }
     }
 
     .diacritic::after {
-        background-color: $blue;
+        background-color: black;
+    }
+
+    &::after {
+        transition: 0.3s all;
+        content: '';
+        width: 100%;
+        height: 10px;
+        background-color: $yellow;
+        position: absolute;
+        z-index: -1;
+        bottom: 2px;
+        left: 0;
     }
 }
 
@@ -180,11 +197,7 @@ hr {
 .pre-title {
     font-family: 'Fira Code';
     display: inline-block;
-    padding: 4px 12px;
     font-size: 14px;
-    color: white;
-    border-radius: 24px;
-    background-color: $purple;
     margin: 0 auto;
 
     @media screen and (min-width: $screen-md) {
