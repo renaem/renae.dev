@@ -3,9 +3,10 @@ import * as THREE from 'three';
 import anime from 'animejs/lib/anime.es.js';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.scss']
+    selector: 'app-nav-menu',
+    templateUrl: './nav-menu.component.html',
+    styleUrls: ['./nav-menu.component.scss'],
+    standalone: false
 })
 export class NavMenuComponent implements OnInit, AfterViewInit {
   @ViewChild('navBackground')

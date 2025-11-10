@@ -10,23 +10,21 @@ import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  animations: [
-    trigger('collapse', [
-      state(
-        'false',
-        style({
-          height: AUTO_STYLE,
-          opacity: 1,
-          visibility: AUTO_STYLE,
-        })
-      ),
-      state('true', style({height: '0', opacity: 0, visibility: 'hidden'})),
-      transition('false => true', animate(300 + 'ms ease-in')),
-      transition('true => false', animate(300 + 'ms ease-out')),
-    ]),
-  ],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    animations: [
+        trigger('collapse', [
+            state('false', style({
+                height: AUTO_STYLE,
+                opacity: 1,
+                visibility: AUTO_STYLE,
+            })),
+            state('true', style({ height: '0', opacity: 0, visibility: 'hidden' })),
+            transition('false => true', animate(300 + 'ms ease-in')),
+            transition('true => false', animate(300 + 'ms ease-out')),
+        ]),
+    ],
+    standalone: false
 })
 
 export class AppComponent implements AfterViewInit, OnDestroy {
