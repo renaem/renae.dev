@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener, inject, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener, inject, NgZone, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
@@ -36,6 +37,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   @Input('nearClipping') public nearClippingPlane: number = 0.1;
   @Input('farClipping') public farClippingPlane: number = 2000;
 
+  private readonly destroy$$ = new Subject<void>();
+  private isBrowser = isPlatformBrowser(this.platformId);
+
   mouseCoords = { 
     x: 0, 
     y: 0 
@@ -62,8 +66,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   isLoaded = false;
 
-  private readonly ngZone = inject(NgZone);
-  private readonly destroy$$ = new Subject<void>();
+  constructor(
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private doc: Document
+  ) {}
 
   /**
    * Create the scene
@@ -209,7 +216,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }());
   }
 
-  constructor() {
+  public ngOnDestroy(): void {
+    this.destroy$$.next();
+  }
+
+  ngAfterViewInit() {
+    if (!this.isBrowser) {
+      return;
+    }
+
     this.ngZone.runOutsideAngular(() => {
       fromEvent(window, 'resize')
           .pipe(takeUntil(this.destroy$$))
@@ -246,13 +261,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           this.mouseCoords = this.getMousePos(e);
       });
     });
-  }
 
-  public ngOnDestroy(): void {
-    this.destroy$$.next();
-  }
-
-  ngAfterViewInit() {
     this.createScene();
     this.startRenderingLoop();
   }
