@@ -1,4 +1,5 @@
-<div *ngIf="recentTrack && recentTrack['@attr']?.nowplaying === 'true'" class="now-playing">
+@if (recentTrack && recentTrack['@attr']?.nowplaying === 'true') {
+  <div class="now-playing">
     <div class="record-player">
       <div class="record spin">
         <div class="middle"></div>
@@ -13,8 +14,10 @@
       <i>{{ recentTrack.artist['#text'] }}</i>
       <p class="attribute">Live Spotify data via the <a href="https://www.last.fm/api" target="_blank">LastFM API</a></p>
     </div>
-</div>
-<div *ngIf="recentTrack && !recentTrack['@attr']" class="last-played">
+  </div>
+}
+@if (recentTrack && !recentTrack['@attr']) {
+  <div class="last-played">
     <div class="record-player">
       <div class="record">
         <div class="middle"></div>
@@ -34,4 +37,5 @@
       </div>
       <p class="attribute">Spotify data via the <a href="https://www.last.fm/api" target="_blank">LastFM API</a></p>
     </div>
-</div>
+  </div>
+}

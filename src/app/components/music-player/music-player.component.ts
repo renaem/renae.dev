@@ -5,8 +5,9 @@ import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-music-player',
-  templateUrl: './music-player.component.html',
+    selector: 'app-music-player',
+    templateUrl: './music-player.component.html',
+    standalone: false
 })
 export class MusicPlayerComponent implements OnInit {
   userName: string;

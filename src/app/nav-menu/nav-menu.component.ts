@@ -1,31 +1,42 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import * as THREE from 'three';
 import anime from 'animejs/lib/anime.es.js';
+import { Subject } from 'rxjs';
+
+const TWO_PI = Math.PI * 2;
+// Wrap to [-π, π]
+const wrapPi = (a: number) => {
+  a = (a + Math.PI) % TWO_PI;
+  if (a < 0) a += TWO_PI;
+  return a - Math.PI;
+};
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.scss']
+    selector: 'app-nav-menu',
+    templateUrl: './nav-menu.component.html',
+    styleUrls: ['./nav-menu.component.scss'],
+    standalone: false
 })
 export class NavMenuComponent implements OnInit, AfterViewInit {
-  @ViewChild('navBackground')
-  private canvasRef: ElementRef;
+  @ViewChild('navBackground', { static: false })
+  private canvasRef!: ElementRef<HTMLCanvasElement>;
   
-  private camera!: THREE.PerspectiveCamera;
-
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
   }
 
+  private camera!: THREE.OrthographicCamera;
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
 
-  private pillOne: THREE.CapsuleGeometry;
+  private pillOne!: THREE.Mesh<THREE.CapsuleGeometry, THREE.Material>;
   pillOneHover = false;
-  private pillTwo: THREE.CapsuleGeometry;
+  private pillTwo!: THREE.Mesh<THREE.CapsuleGeometry, THREE.Material>;
   pillTwoHover = false;
-  private pillThree: THREE.CapsuleGeometry;
+  private pillThree!: THREE.Mesh< THREE.CapsuleGeometry, THREE.Material>;
   pillThreeHover = false;
+
+  private destroy$ = new Subject<void>();
 
   constructor() { }
 
@@ -67,23 +78,14 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
       //   component.pillThree.rotation.y -= rotationDelta;
       // }
 
-      // Update the total rotation
-      totalRotation += rotationDelta;
+      // keep rotations bounded so they never blow up
+      component.pillOne.rotation.x = wrapPi(component.pillOne.rotation.x);
+      component.pillOne.rotation.y = wrapPi(component.pillOne.rotation.y);
+      component.pillOne.rotation.z = wrapPi(component.pillOne.rotation.z);
 
-      // Check if the total rotation has exceeded 365 degrees (2 * PI radians)
-      if (totalRotation >= Math.PI + (Math.PI / 2)) {
-        // Reset the total rotation
-        totalRotation = 0;
-
-        // Reset all capsule's rotation to its original position
-        component.pillOne.rotation.x = Math.PI / 2;
-        component.pillOne.rotation.z = Math.PI / 2;
-
-        component.pillTwo.rotation.x = Math.PI / 2;
-        component.pillTwo.rotation.z = Math.PI / 2;
-
-        // component.pillThree.rotation.x = Math.PI / 2;
-      }
+      component.pillTwo.rotation.x = wrapPi(component.pillTwo.rotation.x);
+      component.pillTwo.rotation.y = wrapPi(component.pillTwo.rotation.y);
+      component.pillTwo.rotation.z = wrapPi(component.pillTwo.rotation.z);
 
       requestAnimationFrame(render);
       component.renderer.render(component.scene, component.camera);
@@ -178,9 +180,35 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
     // this.scene.add(this.pillThree);
   }
 
+  private snapToHalfTurn(angle: number, offset = Math.PI / 2): number {
+    // nearest multiple of 180° from offset, without modulo wrapping
+    const half = Math.PI;
+    const n = Math.round((angle - offset) / half);
+    return offset + n * half;
+  }
+
+  private unwrapTo(start: number, end: number): number {
+    // choose end equivalent that moves <= 180° from start
+    const TWO_PI = Math.PI * 2;
+    let e = end;
+    while (e - start >  Math.PI) e -= TWO_PI;
+    while (e - start < -Math.PI) e += TWO_PI;
+    return e;
+  }
+
   linkHover(linkId: number, event: MouseEvent) {
     if(linkId === 1) {
+      const tx = this.snapToHalfTurn(this.pillOne.rotation.x, Math.PI / 2);
+      const tz = this.snapToHalfTurn(this.pillOne.rotation.z, Math.PI / 2);
+      const ux = this.unwrapTo(this.pillOne.rotation.x, tx);
+      const uz = this.unwrapTo(this.pillOne.rotation.z, tz);
+
       this.pillOneHover = true;
+
+      // Remove any existing animations to prevent conflicts
+      anime.remove(this.pillOne.scale);
+      anime.remove(this.pillOne.rotation);
+
       anime({
         targets: [this.pillOne.scale],
         x: 1.4, y: 1.4, z: 1.4,
@@ -190,14 +218,26 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
       });
       anime({
         targets: [this.pillOne.rotation],
-        x: Math.PI / 2, y: 0, z: Math.PI / 2,
+        x: ux,
+        z: uz,
+        y: 0,
         easing: "easeOutQuad",
         duration: 500,
         loop: false
       });
     }
     if(linkId === 2) {
+      const tx = this.snapToHalfTurn(this.pillTwo.rotation.x, Math.PI / 2);
+      const tz = this.snapToHalfTurn(this.pillTwo.rotation.z, Math.PI / 2);
+      const ux = this.unwrapTo(this.pillTwo.rotation.x, tx);
+      const uz = this.unwrapTo(this.pillTwo.rotation.z, tz);
+
+      // Remove any existing animations to prevent conflicts
+      anime.remove(this.pillTwo.scale);
+      anime.remove(this.pillTwo.rotation);
+
       this.pillTwoHover = true;
+      
       anime({
         targets: [this.pillTwo.scale],
         x: 1.4, y: 1.4, z: 1.4,
@@ -207,7 +247,9 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
       });
       anime({
         targets: [this.pillTwo.rotation],
-        x: Math.PI / 2, y: 0, z: Math.PI / 2,
+        x: ux,
+        z: uz,
+        y: 0,
         easing: "easeOutQuad",
         duration: 500,
         loop: false
