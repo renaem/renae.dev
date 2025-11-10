@@ -58,7 +58,7 @@ p {
     }
 }
 
-a {
+a:not(.nav-link) {
     color: black;
     transition: 0.3s all;
     text-decoration: none;
