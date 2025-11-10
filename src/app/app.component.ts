@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener, inject, NgZone, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, HostListener, inject, NgZone, OnDestroy, Inject, PLATFORM_ID, DOCUMENT } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
