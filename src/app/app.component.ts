@@ -81,7 +81,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.scene = new THREE.Scene();
 
     // Loader for 3D object using GLTF with Draco compression
-    this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    // Decoder is self-hosted from node_modules/three (see angular.json assets) so it matches the three version
+    this.dracoLoader.setDecoderPath('/draco/');
     this.dracoLoader.preload();
     this.gltfLoader.setDRACOLoader(this.dracoLoader);
 
@@ -95,45 +96,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       texture.dispose()
       gen.dispose()
 
-      this.gltfLoader.load('/assets/renae_island/renae_island_baking.gltf', (gltf) => {
-        gltf.scene.traverse( function( node ) {
-          if (node.isGroup) {
-            node.children.forEach(child => {
-              if (child.isMesh || child.isObject3D) {
-                child.castShadow = true;
-              }
-            })
-          } else if(node.isMesh || node.isObject3D) {
-            if(node.name === 'Floor') {
-              node.receiveShadow = true;
-            } else {
-              node.castShadow = true;
-            }
-          }
-        } );
-  
-        // Offset for desktop+ sizes
-        if(window.innerWidth > 768) {
-          gltf.scene.position.x = 1.55;
-          gltf.scene.position.z = 1.55;
-        } else {
-          gltf.scene.position.y = 0.75;
-        }
-  
-        this.islandObj = gltf.scene;
-  
-        this.scene.add(this.islandObj);
-  
-        if(window.innerWidth > 768) {
-          this.camera.zoom = 1.1;
-        } else {
-          this.camera.zoom = 0.6;
-        }
-  
-        this.camera.updateProjectionMatrix();
-  
-        this.isLoaded = true;
-      });
+      this.loadIsland();
+    }, undefined, (err) => {
+      // Still show the island (without env lighting) if the HDR fails
+      console.error('Failed to load environment map', err);
+      this.loadIsland();
     })
 
     //Create a DirectionalLight and turn on shadows for the light
@@ -161,6 +128,58 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     )
 
     this.camera.position.set(5, 8, -5);
+  }
+
+  /**
+   * Load the island model and add it to the scene
+   *
+   * @private
+   * @memberof AppComponent
+   */
+  private loadIsland() {
+    this.gltfLoader.load('/assets/renae_island/renae_island_baking.gltf', (gltf) => {
+      gltf.scene.traverse( function( node ) {
+        if (node.isGroup) {
+          node.children.forEach(child => {
+            if (child.isMesh || child.isObject3D) {
+              child.castShadow = true;
+            }
+          })
+        } else if(node.isMesh || node.isObject3D) {
+          if(node.name === 'Floor') {
+            node.receiveShadow = true;
+          } else {
+            node.castShadow = true;
+          }
+        }
+      } );
+
+      // Offset for desktop+ sizes
+      if(window.innerWidth > 768) {
+        gltf.scene.position.x = 1.55;
+        gltf.scene.position.z = 1.55;
+      } else {
+        gltf.scene.position.y = 0.75;
+      }
+
+      this.islandObj = gltf.scene;
+
+      this.scene.add(this.islandObj);
+
+      if(window.innerWidth > 768) {
+        this.camera.zoom = 1.1;
+      } else {
+        this.camera.zoom = 0.6;
+      }
+
+      this.camera.updateProjectionMatrix();
+
+      this.isLoaded = true;
+    }, undefined, (err) => {
+      // Don't leave the page stuck behind the loader if the model fails
+      console.error('Failed to load island model', err);
+      this.isLoaded = true;
+    });
   }
 
   rgb(r, g, b) {
