@@ -27,7 +27,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "draco_{decoder.js,decoder.wasm,wasm_wrapper.js}",
+                "input": "node_modules/three/examples/jsm/libs/draco/gltf",
+                "output": "draco"
+              }
             ],
             "styles": [
               "src/styles.scss"
